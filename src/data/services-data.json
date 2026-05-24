@@ -1,0 +1,63 @@
+[
+  {
+    "department": "Diagnostic Services",
+    "title": "Diagnostic Services",
+    "tagline": "Advanced heart care with precision diagnostics.",
+    "description": "Comprehensive heart care and advanced cardiac treatments tailored to every stage of your heart health journey.",
+    "image": "/images/dept-cardio.jpg",
+    "icon": "HeartIcon",
+    "highlights": [
+      "24/7 cardiac monitoring",
+      "Interventional ",
+      "Personalized risk plans"
+    ],
+    "features": ["Heart checkups", "Angioplasty", "Cardiac surgery"],
+    "component":"DiagnosticServices"
+  },
+
+  {
+    "department": "Indoor Services",
+    "title": "Indoor Services",
+    "tagline": "Safe, precise, and minimally invasive care.",
+    "description": "State-of-the-art surgical procedures across specialties with a focus on recovery and safety.",
+    "image": "/images/dept-ortho.png",
+    "icon": "ScalpelIcon",
+    "highlights": [
+      "Neuro Surgery",
+      "Modern operating suites",
+      "Post-op recovery care"
+    ],
+    "features": ["General surgery", "Minimally invasive", "Post-op care"],
+    "component":"IndoorServices"
+  },
+  {
+    "department": "Outdoor Services",
+    "title": "Outdoor Services",
+    "tagline": "Safe, precise, and minimally invasive care.",
+    "description": "State-of-the-art surgical procedures across specialties with a focus on recovery and safety.",
+    "image": "/images/dept-ortho.png",
+    "icon": "ScalpelIcon",
+    "highlights": [
+      "Minimally invasive",
+      "Modern operating suites",
+      "Post-op recovery care"
+    ],
+    "features": ["General surgery", "Minimally invasive", "Post-op care"],
+    "component":"OutdoorServices"
+  }
+  ,
+  {
+    "department": "XXX Services",
+    "title": "Outdoor Services",
+    "tagline": "Safe, precise, and minimally invasive care.",
+    "description": "State-of-the-art surgical procedures across specialties with a focus on recovery and safety.",
+    "image": "/images/dept-ortho.png",
+    "icon": "ScalpelIcon",
+    "highlights": [
+      "Minimally invasive",
+      "Modern operating suites",
+      "Post-op recovery care"
+    ],
+    "features": ["General surgery", "Minimally invasive", "Post-op care"]
+  }
+]
