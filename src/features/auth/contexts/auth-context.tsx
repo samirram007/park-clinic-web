@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient  } from '@tanstack/react-query';
  
 import { authService } from '../data/api';
 
@@ -20,17 +20,17 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['user-profile'],
-    queryFn: authService.profile ,
-    retry: true,
+    queryFn: authService.profile,
+    retry: false, // Prevent endless retries on auth failure
   });
 
   const user = data || null;
   const isAuthenticated = !!user;
 
-  const login = (_userData?: User) => {
-    // Invalidate and refetch user profile after login
+  const login = () => {
     refetch();
   };
 
@@ -38,8 +38,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await authService.logout();
     } finally {
-      // Clear cache on logout
-      window.location.reload(); 
+      queryClient.removeQueries({ queryKey: ['user-profile'] });
+      window.location.href = '/login';
     }
   };
 

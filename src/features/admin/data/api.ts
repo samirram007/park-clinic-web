@@ -7,6 +7,7 @@ export interface GetMessagesParams {
     per_page?: number;
     search?: string;
     status?: 'read' | 'unread' | 'all';
+    important?: boolean;
 }
 
 export const contactMessageService = {
@@ -24,6 +25,14 @@ export const contactMessageService = {
     },
     markAsUnread: async (id: number) => {
         const { data } = await apiClient.patch(`${API_PATH}/${id}/unread`);
+        return data;
+    },
+    reply: async ({ id, message }: { id: number, message: string }) => {
+        const { data } = await apiClient.post(`${API_PATH}/${id}/reply`, { reply_message: message });
+        return data;
+    },
+    toggleImportant: async (id: number) => {
+        const { data } = await apiClient.patch(`${API_PATH}/${id}/important`);
         return data;
     }
 }

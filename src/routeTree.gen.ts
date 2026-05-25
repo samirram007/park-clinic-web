@@ -15,6 +15,7 @@ import { Route as GuestIndexRouteImport } from './routes/_guest/index'
 import { Route as GuestPharmacyRouteImport } from './routes/_guest/pharmacy'
 import { Route as GuestLoginRouteImport } from './routes/_guest/login'
 import { Route as GuestGalleryRouteImport } from './routes/_guest/gallery'
+import { Route as GuestFrontendRouteImport } from './routes/_guest/frontend'
 import { Route as GuestDoctorsRouteImport } from './routes/_guest/doctors'
 import { Route as GuestDepartmentsRouteImport } from './routes/_guest/departments'
 import { Route as GuestContactRouteImport } from './routes/_guest/contact'
@@ -50,6 +51,11 @@ const GuestLoginRoute = GuestLoginRouteImport.update({
 const GuestGalleryRoute = GuestGalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestFrontendRoute = GuestFrontendRouteImport.update({
+  id: '/frontend',
+  path: '/frontend',
   getParentRoute: () => GuestRoute,
 } as any)
 const GuestDoctorsRoute = GuestDoctorsRouteImport.update({
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof GuestContactRoute
   '/departments': typeof GuestDepartmentsRoute
   '/doctors': typeof GuestDoctorsRoute
+  '/frontend': typeof GuestFrontendRoute
   '/gallery': typeof GuestGalleryRoute
   '/login': typeof GuestLoginRoute
   '/pharmacy': typeof GuestPharmacyRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/contact': typeof GuestContactRoute
   '/departments': typeof GuestDepartmentsRoute
   '/doctors': typeof GuestDoctorsRoute
+  '/frontend': typeof GuestFrontendRoute
   '/gallery': typeof GuestGalleryRoute
   '/login': typeof GuestLoginRoute
   '/pharmacy': typeof GuestPharmacyRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/_guest/contact': typeof GuestContactRoute
   '/_guest/departments': typeof GuestDepartmentsRoute
   '/_guest/doctors': typeof GuestDoctorsRoute
+  '/_guest/frontend': typeof GuestFrontendRoute
   '/_guest/gallery': typeof GuestGalleryRoute
   '/_guest/login': typeof GuestLoginRoute
   '/_guest/pharmacy': typeof GuestPharmacyRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/departments'
     | '/doctors'
+    | '/frontend'
     | '/gallery'
     | '/login'
     | '/pharmacy'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/departments'
     | '/doctors'
+    | '/frontend'
     | '/gallery'
     | '/login'
     | '/pharmacy'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/_guest/contact'
     | '/_guest/departments'
     | '/_guest/doctors'
+    | '/_guest/frontend'
     | '/_guest/gallery'
     | '/_guest/login'
     | '/_guest/pharmacy'
@@ -232,6 +244,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GuestGalleryRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/frontend': {
+      id: '/_guest/frontend'
+      path: '/frontend'
+      fullPath: '/frontend'
+      preLoaderRoute: typeof GuestFrontendRouteImport
       parentRoute: typeof GuestRoute
     }
     '/_guest/doctors': {
@@ -299,6 +318,7 @@ interface GuestRouteChildren {
   GuestContactRoute: typeof GuestContactRoute
   GuestDepartmentsRoute: typeof GuestDepartmentsRoute
   GuestDoctorsRoute: typeof GuestDoctorsRoute
+  GuestFrontendRoute: typeof GuestFrontendRoute
   GuestGalleryRoute: typeof GuestGalleryRoute
   GuestLoginRoute: typeof GuestLoginRoute
   GuestPharmacyRoute: typeof GuestPharmacyRoute
@@ -312,6 +332,7 @@ const GuestRouteChildren: GuestRouteChildren = {
   GuestContactRoute: GuestContactRoute,
   GuestDepartmentsRoute: GuestDepartmentsRoute,
   GuestDoctorsRoute: GuestDoctorsRoute,
+  GuestFrontendRoute: GuestFrontendRoute,
   GuestGalleryRoute: GuestGalleryRoute,
   GuestLoginRoute: GuestLoginRoute,
   GuestPharmacyRoute: GuestPharmacyRoute,
