@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Baby, Syringe, Ambulance, TestTube } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
 import { containerVariants, itemVariants } from '../animationVariants'
 import { additionalServicesData } from '@/data/home/additional-services-section.data'
 
@@ -57,7 +58,7 @@ export default function AdditionalServicesSection() {
             animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <img src="/images/haemati.png" className="absolute inset-0 h-full w-full object-cover" />
+            <OptimizedImage src="/images/haemati.png" alt="Haematology Daycare Chemotherapy Unit" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 to-transparent px-8 py-8">
              
              

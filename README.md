@@ -1,20 +1,82 @@
-Welcome to your new TanStack app! 
+# Park Clinic — Frontend
 
-# Getting Started
+## Environment Variables
+
+The application uses Vite environment variables (prefixed with `VITE_`) for configuration.
+
+### File Overview
+
+| File | Purpose | Committed? |
+|------|---------|-----------|
+| `.env` | Shared defaults (loaded in all modes) | ✅ Yes |
+| `.env.local` | Local overrides (ignored by git) | ❌ No |
+| `.env.production` | Production-only overrides | ✅ Yes |
+| `.env.example` | Template for new developers | ✅ Yes |
+
+### Quick Start
+
+```bash
+# Copy the example environment file to get started
+cp .env.example .env
+
+# (Optional) Override any values for your local setup in .env.local
+# echo "VITE_API_URL=http://my-local-api.test/api" >> .env.local
+
+# Install dependencies
+npm install
+
+# Start the dev server
+npm run dev
+```
+
+### Vite Env Loading Priority
+
+Vite loads `.env` files in this order (later files override earlier ones):
+
+1. `.env` — defaults for all modes
+2. `.env.local` — local overrides (gitignored)
+3. `.env.[mode]` — mode-specific (e.g., `.env.production`)
+4. `.env.[mode].local` — local mode-specific (gitignored)
+
+### Required Variables
+
+All `VITE_` variables are declared in [`src/vite-env.d.ts`](./src/vite-env.d.ts):
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_API_URL` | Direct API URL for axios requests |
+| `VITE_API_BASE_URL` | Backend origin for Vite dev proxy |
+| `VITE_API_SECURE` | Whether the backend uses HTTPS |
+| `VITE_AUTH_STORAGE_TYPE` | Auth storage: `localStorage` or `cookie` |
+| `VITE_BASE_URL` | Vite base path (typically `/`) |
+| `VITE_SITE_URL` | Canonical site URL (sitemap, OG tags) |
+| `VITE_COMPANY_NAME` | Full clinic name |
+| `VITE_COMPANY_SHORT_NAME` | Short clinic name |
+| `VITE_COMPANY_ADDRESS` | Clinic address |
+| `VITE_COMPANY_PHONE` | Full phone display |
+| `VITE_COMPANY_PHONE_SHORT` | Short phone number |
+| `VITE_COMPANY_EMAIL` | Contact email |
+| `VITE_GOOGLE_VERIFICATION` | Google Search Console verification code |
+| `VITE_BING_VERIFICATION` | Bing Webmaster Tools verification code |
+
+### Production Build
+
+For production builds, `.env.production` overrides the development defaults. Currently it sets:
+
+- `VITE_API_URL` — production backend endpoint
+- `VITE_API_SECURE=true`
+
+```bash
+npm run build
+```
+
+## Getting Started
 
 To run this application:
 
 ```bash
 npm install
-npm run start
-```
-
-# Building For Production
-
-To build this application for production:
-
-```bash
-npm run build
+npm run dev
 ```
 
 ## Testing

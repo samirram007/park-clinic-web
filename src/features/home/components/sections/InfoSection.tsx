@@ -4,9 +4,9 @@ import { infoSectionData } from '@/data/home/info-section.data'
 
 export default function InfoSection() {
   return (
-    <section className="bg-blue-600 text-white py-12">
+    <section className="bg-blue-600 text-white py-12 flex items-center justify-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {infoSectionData.map((info, index) => (
             <div key={index}>
               <p className="text-blue-200 text-sm mb-2">{info.label}</p>

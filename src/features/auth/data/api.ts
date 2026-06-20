@@ -1,9 +1,8 @@
 import { apiClient } from "@/lib/axios";
+import type { LoginCredentials } from '../schema';
 
-export type LoginCredentials = {
-  email: string;
-  password: string;
-};
+// Re-export for backward compatibility
+export type { LoginCredentials } from '../schema';
 
 export const authService = {
   login: async (credentials: LoginCredentials) => {

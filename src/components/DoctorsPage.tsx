@@ -3,7 +3,7 @@ import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { Search } from 'lucide-react';
 
 import { doctorsPageData } from '@/data/doctors/doctors-page.data';
-import type { Doctor } from '@/data/doctors/doctor';
+import type { Doctor } from '@/features/doctors/schema';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -51,7 +51,7 @@ export function DoctorsPage() {
     ...Array.from(
       new Set(
         doctorsPageData.doctors.map(
-          (doctor: Doctor) => doctor.title
+          (doctor: Doctor) => doctor.title ?? ''
         )
       )
     ),
@@ -148,7 +148,7 @@ export function DoctorsPage() {
             >
               <div className="w-full h-80 rounded-[2rem] overflow-hidden mb-6 relative">
                 <img
-                  src={doctor.image}
+                  src={doctor.image ?? ''}
                   alt={doctor.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                 />
@@ -160,7 +160,7 @@ export function DoctorsPage() {
 
               <div className="px-4 pb-6 w-full">
                 <span className="text-[10px] font-bold text-blue-700 uppercase tracking-[0.15em] mb-2 block">
-                  {doctor.title}
+                  {doctor.title ?? ''}
                 </span>
 
                 <h3 className="text-lg font-bold text-slate-900 mb-1 truncate group-hover:text-blue-700 transition-colors">
@@ -168,7 +168,7 @@ export function DoctorsPage() {
                 </h3>
 
                 <p className="text-slate-400 text-xs mb-8 font-medium uppercase tracking-wider">
-                  {doctor.experience} Experience
+                  {doctor.experience ?? ''} Experience
                 </p>
 
                 <button className="w-full py-4 bg-slate-900 text-white rounded-2xl text-sm font-bold hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-blue-900/20 active:scale-[0.98]">

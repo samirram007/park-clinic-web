@@ -1,12 +1,20 @@
 'use client'
 
+import SEO from '@/components/SEO'
+import OptimizedImage from '@/components/OptimizedImage'
 import { departmentsPageData as data } from '@/data/departments/departments-page.data'
 
 export default function Departments() {
   const { departments: depts, departmentsGrid: grid } = data
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <>
+      <SEO
+        title="Departments"
+        description="Explore the medical departments at Park Sonoscan Clinic — Neurology, Cardiology, Orthopedics, Pediatrics, and more. Expert care across all specialties."
+        canonicalUrl="/departments"
+      />
+      <div className="w-full overflow-x-hidden">
       <section className="bg-linear-to-r from-gray-50 to-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-5xl font-light text-gray-900 mb-4">{data.header.title}</h1>
@@ -35,11 +43,11 @@ export default function Departments() {
               <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
                 <div className={index % 2 === 1 ? 'order-2' : ''}>
                   <div className="bg-gray-300 h-64 rounded-lg overflow-hidden flex items-center justify-center">
-                    {index === 0 && <img src="/images/dept-neuro.png" alt="Neurology" className="w-full h-full object-cover" />}
-                    {index === 1 && <img src="/images/dept-ortho.png" alt="Surgery" className="w-full h-full object-cover" />}
-                    {index === 2 && <img src="/images/dept-cardio.jpg" alt="Dental Care" className="w-full h-full object-cover" />}
-                    {index === 3 && <img src="/images/dept-pedia.png" alt="Ophthalmology" className="w-full h-full object-cover" />}
-                    {index === 4 && <img src="/images/doc1.jpg" alt="Cardiology" className="w-full h-full object-cover" />}
+                    {index === 0 && <OptimizedImage src="/images/dept-neuro.png" alt="Neurology" className="w-full h-full object-cover" />}
+                    {index === 1 && <OptimizedImage src="/images/dept-ortho.png" alt="Orthopedics" className="w-full h-full object-cover" />}
+                    {index === 2 && <OptimizedImage src="/images/dept-cardio.jpg" alt="Cardiology" className="w-full h-full object-cover" />}
+                    {index === 3 && <OptimizedImage src="/images/dept-pedia.png" alt="Pediatrics" className="w-full h-full object-cover" />}
+                    {index === 4 && <OptimizedImage src="/images/doc1.jpg" alt="Doctor" className="w-full h-full object-cover" />}
                   </div>
                 </div>
                 <div className={index % 2 === 1 ? 'order-1' : ''}>
@@ -65,12 +73,12 @@ export default function Departments() {
             {grid.map((dept) => (
               <div key={dept.name} className="bg-white p-8 rounded-lg hover:shadow-lg transition">
                 <div className="bg-gray-300 h-48 rounded-lg mb-4 overflow-hidden flex items-center justify-center">
-                  {dept.name === 'Cardiology' && <img src="/images/dept-cardio.jpg" alt="Cardiology" className="w-full h-full object-cover" />}
-                  {dept.name === 'Neurology' && <img src="/images/dept-neuro.png" alt="Neurology" className="w-full h-full object-cover" />}
-                  {dept.name === 'Orthopedics' && <img src="/images/dept-ortho.png" alt="Orthopedics" className="w-full h-full object-cover" />}
-                  {dept.name === 'Pediatrics' && <img src="/images/dept-pedia.png" alt="Pediatrics" className="w-full h-full object-cover" />}
-                  {dept.name === 'Dermatology' && <img src="/images/doc2.jpg" alt="Dermatology" className="w-full h-full object-cover" />}
-                  {dept.name === 'Oncology' && <img src="/images/doc3.jpg" alt="Oncology" className="w-full h-full object-cover" />}
+                  {dept.name === 'Cardiology' && <OptimizedImage src="/images/dept-cardio.jpg" alt="Cardiology" className="w-full h-full object-cover" />}
+                  {dept.name === 'Neurology' && <OptimizedImage src="/images/dept-neuro.png" alt="Neurology" className="w-full h-full object-cover" />}
+                  {dept.name === 'Orthopedics' && <OptimizedImage src="/images/dept-ortho.png" alt="Orthopedics" className="w-full h-full object-cover" />}
+                  {dept.name === 'Pediatrics' && <OptimizedImage src="/images/dept-pedia.png" alt="Pediatrics" className="w-full h-full object-cover" />}
+                  {dept.name === 'Dermatology' && <OptimizedImage src="/images/doc2.jpg" alt="Dermatology" className="w-full h-full object-cover" />}
+                  {dept.name === 'Oncology' && <OptimizedImage src="/images/doc3.jpg" alt="Oncology" className="w-full h-full object-cover" />}
                 </div>
                 <h4 className="text-xl font-light text-gray-900 mb-3">{dept.name}</h4>
                 <p className="text-gray-600 mb-6 text-sm">{dept.description}</p>
@@ -81,5 +89,6 @@ export default function Departments() {
         </div>
       </section>
     </div>
+    </>
   )
 }

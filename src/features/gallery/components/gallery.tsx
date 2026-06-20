@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO'
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ImageIcon, Maximize2, X } from "lucide-react";
@@ -218,6 +219,12 @@ export default function Gallery() {
     }, [selectedIndex, handleNext, handlePrev, handleClose]);
 
     return (
+        <>
+        <SEO
+            title="Gallery"
+            description="Explore the gallery of Park Sonoscan Clinic — view our state-of-the-art facilities, advanced medical technology, and dedicated healthcare team."
+            canonicalUrl="/gallery"
+        />
         <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
@@ -368,5 +375,6 @@ export default function Gallery() {
                 )}
             </AnimatePresence>
         </div>
+    </>
     );
 }

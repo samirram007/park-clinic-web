@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAuth } from '@/features/auth/contexts/auth-context'
+import { company } from '@/lib/company'
 
 const faceBookLink = "https://www.facebook.com/profile.php?id=61585835171329"
-const instagramLink = "https://www.facebook.com/profile.php?id=61585835171329"
+const instagramLink = "https://www.instagram.com/parksonoscan2568/"
 const linkedinLink = "https://www.facebook.com/profile.php?id=61585835171329"
+const youtubeLink = "https://www.facebook.com/profile.php?id=61585835171329"
 const twiterLink = "https://x.com/Parksonoscan5"
 
 // Custom Brand Icons to replace deprecated Lucide icons
@@ -25,6 +27,13 @@ const InstagramIcon = ({ size = 20 }: { size?: number }) => (
 const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
+  </svg>
+)
+
+const YoutubeIcon = ({ size = 20 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22.56 12.25c0-1.19-.93-2.16-2.1-2.16h-15.9c-1.17 0-2.1.97-2.1 2.16v7.68c0 1.19.93 2.16 2.1 2.16h15.9c1.17 0 2.1-.97 2.1-2.16v-7.68z" />
+    <path d="M8 9v6l5-3z" />
   </svg>
 )
 
@@ -48,6 +57,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
   const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
@@ -56,42 +66,51 @@ export default function Header() {
     { name: 'Indoor Services', slug: 'Indoor Services' },
     { name: 'Diagnostic Services', slug: 'Diagnostic Services' },
     { name: 'Outdoor Services', slug: 'Outdoor Services' },
-    
-   
   ]
 
   const isServicesActive = location.pathname.startsWith('/services')
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 60)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="w-full bg-white relative z-50">
+    <header className={`w-full bg-white fixed top-0 z-50 transition-all duration-300 ${scrolled ? 'shadow-md' : 'shadow-none'}`}>
       {/* Top Bar */}
-      <div className="bg-blue-700 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-xs md:text-sm">
-          <div className="flex flex-row gap-4 md:gap-6">
-            <a href="mailto:info@parkclinickolkata.com" className="hover:text-blue-200 transition">
-              info@parkclinickolkata.com
+      <div className={`bg-blue-700 text-white overflow-hidden transition-all duration-300 ${scrolled ? 'max-h-0 py-0 opacity-0' : 'max-h-16 sm:max-h-12 py-2 opacity-100'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap sm:flex-nowrap justify-between items-center text-[11px] sm:text-sm gap-x-2 sm:gap-x-4">
+          <div className="flex flex-row gap-2 sm:gap-6 items-center">
+            <a href={`mailto:${company.email}`} className="hover:text-blue-200 transition truncate max-w-[130px] sm:max-w-none">
+              {company.email}
             </a>
-            <a href="tel:9775992022" className="font-light hover:text-blue-200 transition hidden sm:inline">
-              +91 9775992022
+            <a href={`tel:${company.phoneShort}`} className="font-light hover:text-blue-200 transition hidden sm:inline">
+              +91 {company.phoneShort}
             </a>
-            <a href="tel:9775992022" className="font-light hover:text-blue-200 transition sm:hidden">
+            <a href={`tel:${company.phoneShort}`} className="font-light hover:text-blue-200 transition sm:hidden">
               Call Us
             </a>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-1.5 sm:gap-4 items-center">
             <a href={faceBookLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition">
-              <FacebookIcon size={18} />
+              <FacebookIcon size={16} />
             </a>
             <a href={twiterLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition">
-              <XIcon size={18} />
+              <XIcon size={16} />
             </a>
-            <a href={linkedinLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition">
-              <LinkedinIcon size={18} />
+            <a href={linkedinLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition hidden sm:inline">
+              <LinkedinIcon size={16} />
             </a>
-            <a href={instagramLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition">
-              <InstagramIcon size={18} />
+            <a href={instagramLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition hidden sm:inline">
+              <InstagramIcon size={16} />
             </a>
-            <div className="border-l border-blue-500 pl-4 ml-2">
+            <a href={youtubeLink} target='_blank' rel="noopener noreferrer" className="hover:text-blue-200 transition hidden sm:inline">
+              <YoutubeIcon size={16} />
+            </a>
+            <div className="border-l border-blue-500 pl-1.5 sm:pl-4 ml-1 sm:ml-2">
               {isAuthenticated ? (
                 <button onClick={() => { logout(); navigate({ to: '/login' }) }} className="hover:text-blue-200 transition">
                   Logout
@@ -112,7 +131,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1">
         <div className="flex justify-between items-center h-auto">
           <Link to="/" className="flex items-center shrink-0">
-            <img src="/logo192.png" alt="Logo" className="h-20 w-auto object-contain" />
+            <img src="/logo192.png" alt="Logo" className={`w-auto object-contain transition-all duration-300 ${scrolled ? 'h-12' : 'h-20'}`} />
           </Link>
 
           {/* Desktop Navigation */}
@@ -209,7 +228,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="lg:hidden fixed inset-0 top-[116px] bg-white z-40 overflow-y-auto"
+              className="lg:hidden fixed inset-0 top-0 bg-white z-40 overflow-y-auto pt-28"
             >
               <nav className="p-4 flex flex-col gap-2">
                 <Link
@@ -263,6 +282,14 @@ export default function Header() {
                     </div>
                   )}
                 </div>
+                <Link
+                  to="/pharmacy"
+                  className={`px-4 py-3 text-lg border-b border-gray-50 rounded-lg ${location.pathname === '/pharmacy' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-800'
+                    }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Pharmacy
+                </Link>
 
                 <Link
                   to="/departments"

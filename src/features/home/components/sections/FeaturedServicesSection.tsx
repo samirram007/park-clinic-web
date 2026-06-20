@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Activity, HeartPulse, Zap, Pill, Stethoscope } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
 import { featuredServicesData } from '@/data/home/featured-services-section.data'
 
 const iconMap: { [key: string]: any } = {
@@ -61,7 +62,7 @@ export default function FeaturedServicesSection() {
 
           <div className="grid md:grid-cols-2 gap-12 mb-16 items-start justify-center">
             <div className="bg-gradient-to-br from-blue-400 to-blue-600 h-full min-h-[420px] rounded-2xl overflow-hidden flex items-center justify-center relative">
-              <img src="/images/fea1.png" alt="Emergency Care" className="w-full h-full object-cover" />
+              <OptimizedImage src="/images/fea1.png" alt="Emergency Care" className="w-full h-full object-cover" />
               <div className="absolute top-6 left-6 bg-white px-6 py-2 rounded-full">
                 <p className="text-blue-600 font-light text-sm">{featuredServicesData.services[0].title}</p>
               </div>
@@ -105,7 +106,7 @@ export default function FeaturedServicesSection() {
               {highlightCards.map((card) => (
                 <div key={card.title} className="text-center">
                   <div className="w-32 h-32 mx-auto bg-gray-200 rounded-full overflow-hidden mb-4">
-                    <img src={card.image} alt={card.alt} className="w-full h-full object-cover" />
+                    <OptimizedImage src={card.image} alt={card.alt} className="w-full h-full object-cover" />
                   </div>
                   <h4 className="font-light text-gray-900">{card.title}</h4>
                   <p className="text-sm text-gray-600">{card.description}</p>

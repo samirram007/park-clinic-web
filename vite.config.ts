@@ -3,6 +3,7 @@ import tanstackRouter from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'node:path'
 import { defineConfig, loadEnv } from 'vite'
+import sitemap from 'vite-plugin-sitemap'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -50,6 +51,35 @@ export default defineConfig(({ mode }) => {
       }),
       react(),
       tailwindcss(),
+      sitemap({
+        hostname: env.VITE_SITE_URL || 'https://parkclinickolkata.com',
+        dynamicRoutes: [
+          '/about',
+          '/career',
+          '/contact',
+          '/departments',
+          '/doctors',
+          '/frontend',
+          '/gallery',
+          '/pharmacy',
+          '/privacy-policy',
+          '/terms-of-service',
+          '/sitemap',
+          '/services/Indoor%20Services',
+          '/services/Diagnostic%20Services',
+          '/services/Outdoor%20Services',
+          '/services/Brain%20%26%20Spine%20Surgery%20%28Neurosciences%29',
+          '/services/Orthopaedics%20%26%20Spine%20Surgery',
+          '/services/Paediatrics%20%26%20Childcare',
+          '/services/ENT%20%26%20Maxillofacial%20Surgery',
+          '/services/General%2C%20Uro%20%26%20Laparoscopic%20Surgery',
+          '/services/Laboratory%20Testing',
+        ],
+        exclude: ['/login', '/admin/**'],
+        changefreq: 'weekly',
+        priority: 0.7,
+        lastmod: new Date(),
+      }),
     ],
     optimizeDeps: {
       include: ['react-is'],
@@ -58,15 +88,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
     },
-    // server: { 
-    //   proxy: {
-    //     '/api': {
-    //       target: 'https://aipt-api.local',
-    //       changeOrigin: true,
-    //       rewrite: (path) => path.replace(/^\/api/, ''),
-    //     },
-    //   },
-    // },
+ 
 
     resolve: {
       tsconfigPaths: true,

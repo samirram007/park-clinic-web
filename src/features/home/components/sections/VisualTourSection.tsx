@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
 import { ImageIcon, ArrowRight } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
 import { visualTourData as data } from '@/data/home/visual-tour-section.data'
 
 export default function VisualTourSection() {
@@ -39,7 +40,7 @@ export default function VisualTourSection() {
               transition={{ delay: index * 0.1 }}
               className="relative group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm aspect-4/3"
             >
-              <img 
+              <OptimizedImage 
                 src={image.src} 
                 alt={image.title} 
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"

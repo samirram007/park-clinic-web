@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { Smartphone, UserCog, Trophy, Lightbulb } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
 import { containerVariants, itemVariants } from '../animationVariants'
 import { excellenceData } from '@/data/home/excellence-section.data'
 
@@ -63,7 +64,7 @@ export default function ExcellenceSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="bg-gradient-to-br from-gray-200 to-gray-100 h-96 rounded-2xl flex items-center justify-center overflow-hidden">
-              <img 
+              <OptimizedImage 
                 src="/images/featureimg.jpg" 
                 alt="Medical Care" 
                 className="w-full h-full object-cover"

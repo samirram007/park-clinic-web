@@ -1,3 +1,5 @@
+import SEO from '@/components/SEO'
+import OptimizedImage from '@/components/OptimizedImage'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { aboutPageData as data } from '@/data/about/about.data'
@@ -32,7 +34,13 @@ export default function About() {
   }
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <>
+      <SEO
+        title="About Us"
+        description="Learn about Park Sonoscan Clinic in Kolkata — our mission, values, accreditations, and commitment to providing exceptional healthcare with compassion."
+        canonicalUrl="/about"
+      />
+      <div className="w-full overflow-x-hidden">
       <section className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-5xl font-light text-white mb-8">{data.header.title}</h1>
@@ -93,10 +101,10 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <div className="relative h-96 rounded-2xl overflow-hidden">
-                <img src="/images/herobg.jpg" alt="Healthcare Facility" className="w-full h-full object-cover" />
+                <OptimizedImage src="/images/herobg.jpg" alt="Healthcare Facility" className="w-full h-full object-cover" />
               </div>
               <div className="absolute bottom-0 right-0 transform translate-y-12 translate-x-12 w-40 h-40 rounded-full border-4 border-white overflow-hidden shadow-lg bg-white">
-                <img src="/images/doc3.jpg" alt="Doctor" className="w-full h-full object-cover" />
+                <OptimizedImage src="/images/doc3.jpg" alt="Doctor" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </div>
@@ -171,7 +179,7 @@ export default function About() {
                 <DialogTrigger asChild>
                   <div className="block">
                     <div className="relative overflow-hidden rounded-2xl mb-4">
-                      <img src="/images/nabh.png" alt="NABH Hospital" className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <OptimizedImage src="/images/nabh.png" alt="NABH Hospital" className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={32} />
                       </div>
@@ -188,7 +196,7 @@ export default function About() {
                       <DialogTitle className="text-2xl text-center text-gray-900">NABH Hospital Accreditation</DialogTitle>
                     </DialogHeader>
                     <div className="flex-1 flex items-center justify-center bg-gray-50 p-8">
-                      <img src="/images/nabh.png" alt="NABH Hospital" className="max-w-full max-h-full object-contain" />
+                      <OptimizedImage src="/images/nabh.png" alt="NABH Hospital" className="max-w-full max-h-full object-contain" />
                     </div>
                     <div className="flex-shrink-0 p-6 bg-white border-t">
                       <div className="text-center max-w-4xl mx-auto">
@@ -210,7 +218,7 @@ export default function About() {
                 <DialogTrigger asChild>
                   <div className="block">
                     <div className="relative overflow-hidden rounded-2xl mb-4">
-                      <img src="/images/nabl.png" alt="NABL Laboratory" className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <OptimizedImage src="/images/nabl.png" alt="NABL Laboratory" className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={32} />
                       </div>
@@ -227,12 +235,12 @@ export default function About() {
                       <DialogTitle className="text-2xl text-center text-gray-900">NABL Laboratory Certification</DialogTitle>
                     </DialogHeader>
                     <div className="flex-1 flex items-center justify-center bg-gray-50 p-8">
-                      <img src="/images/nabl.png" alt="NABL Laboratory" className="max-w-full max-h-full object-contain" />
+                      <OptimizedImage src="/images/nabl.png" alt="NABL Laboratory" className="max-w-full max-h-full object-contain" />
                     </div>
                     <div className="flex-shrink-0 p-6 bg-white border-t">
                       <div className="text-center max-w-4xl mx-auto">
                         <p className="text-gray-700 text-lg font-medium mb-2">National Accreditation Board for Testing and Calibration Laboratories</p>
-                        <p className="text-gray-600 leading-relaxed">Our laboratory services are accredited by NABL, guaranteeing accurate and reliable diagnostic testing with international quality standards.</p>
+                        <p className="text-gray-600 leading-relaxed">Our laboratory services are accredited by NABL, ensuring accurate and reliable diagnostic testing with international quality standards.</p>
                       </div>
                     </div>
                   </div>
@@ -249,7 +257,7 @@ export default function About() {
                 <DialogTrigger asChild>
                   <div className="block">
                     <div className="relative overflow-hidden rounded-2xl mb-4">
-                      <img src="/images/nabl.png" alt="ISO Certified" className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <OptimizedImage src="/images/nabl.png" alt="ISO Certified" className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={32} />
                       </div>
@@ -266,7 +274,7 @@ export default function About() {
                       <DialogTitle className="text-2xl text-center text-gray-900">ISO Certification</DialogTitle>
                     </DialogHeader>
                     <div className="flex-1 flex items-center justify-center bg-gray-50 p-8">
-                      <img src="/images/nabl.png" alt="ISO Certified" className="max-w-full max-h-full object-contain" />
+                      <OptimizedImage src="/images/nabl.png" alt="ISO Certified" className="max-w-full max-h-full object-contain" />
                     </div>
                     <div className="flex-shrink-0 p-6 bg-white border-t">
                       <div className="text-center max-w-4xl mx-auto">
@@ -293,5 +301,6 @@ export default function About() {
         </div>
       </section>
     </div>
+    </>
   )
 }

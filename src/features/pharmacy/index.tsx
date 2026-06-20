@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO'
 import {
     Pill,
     Clock3,
@@ -47,6 +48,12 @@ const medicineCategories = [
 
 export default function PharmacyComponent() {
     return (
+        <>
+        <SEO
+            title="Pharmacy"
+            description="Park Sonoscan Clinic's 24/7 pharmacy — certified medicines, home delivery, and expert pharmacist support for all your healthcare needs."
+            canonicalUrl="/pharmacy"
+        />
         <section className="bg-slate-50">
 
             {/* Hero Section */}
@@ -71,7 +78,7 @@ export default function PharmacyComponent() {
                             assistance for all your medical needs.
                         </p>
 
-                        <div className="flex flex-wrap gap-4 mt-8">
+                        <div className="hidden flex-wrap gap-4 mt-8">
                             <button className="bg-yellow-400 hover:bg-yellow-300 text-black px-7 py-3 rounded-xl font-semibold transition">
                                 Order Medicines
                             </button>
@@ -202,5 +209,6 @@ export default function PharmacyComponent() {
                 </div>
             </div>
         </section>
+    </>
     );
 }

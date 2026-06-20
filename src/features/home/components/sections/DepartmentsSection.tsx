@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import OptimizedImage from '@/components/OptimizedImage'
 import { departmentsSectionData } from '@/data/home/departments-section.data'
 
 export default function DepartmentsSection() {
@@ -46,9 +47,9 @@ export default function DepartmentsSection() {
             animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <img 
+            <OptimizedImage 
               src="/images/dept-spine.jpg" 
-              alt="Cardiology" 
+              alt="Spine Department" 
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -62,7 +63,7 @@ export default function DepartmentsSection() {
               animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: index === 0 ? -30 : 30 }}
               transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
             >
-              <img 
+              <OptimizedImage 
                 src={specialty.image}
                 alt={specialty.name} 
                 className="w-full h-full object-cover"

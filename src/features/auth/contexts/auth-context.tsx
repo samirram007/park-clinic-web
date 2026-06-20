@@ -2,18 +2,14 @@ import React, { createContext, useContext } from 'react';
 import { useQuery, useQueryClient  } from '@tanstack/react-query';
  
 import { authService } from '../data/api';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+import { setToken, removeToken, getToken } from '@/lib/auth-storage';
+import type { User, LoginResponse } from '../schema';
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (userData?: User) => void;
+  login: (data: LoginResponse) => void;
   logout: () => void;
 }
 
@@ -24,20 +20,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['user-profile'],
     queryFn: authService.profile,
+    enabled: !!getToken(),
     retry: false, // Prevent endless retries on auth failure
   });
 
   const user = data || null;
   const isAuthenticated = !!user;
 
-  const login = () => {
-    refetch();
+  const login = (data: LoginResponse) => {
+    if (data.token) {
+      setToken(data.token);
+      refetch();
+    }
   };
 
   const logout = async () => {
     try {
       await authService.logout();
     } finally {
+      removeToken();
       queryClient.removeQueries({ queryKey: ['user-profile'] });
       window.location.href = '/login';
     }

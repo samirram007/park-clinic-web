@@ -1,3 +1,4 @@
+import SEO from '@/components/SEO'
 import { Clock, Mail, Phone } from 'lucide-react'
 import { contactPageData as data } from '@/data/contact/contact.data'
 import ContactForm from './contact-form'
@@ -5,7 +6,13 @@ import GoogleMap from './google-map'
 
 export default function Contact() {
   return (
-    <div className="w-full overflow-x-hidden bg-slate-50">
+    <>
+      <SEO
+        title="Contact Us"
+        description="Get in touch with Park Sonoscan Clinic in Kolkata. Call us, email us, or visit us for appointments and inquiries. We're here 24/7 for your healthcare needs."
+        canonicalUrl="/contact"
+      />
+      <div className="w-full overflow-x-hidden bg-slate-50">
       {/* Hero Section */}
       <section className="bg-blue-700 text-white py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -72,5 +79,6 @@ export default function Contact() {
         </div>
       </section>
     </div>
+    </>
   )
 }

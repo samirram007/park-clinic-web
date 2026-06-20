@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as GuestRouteImport } from './routes/_guest'
 import { Route as GuestIndexRouteImport } from './routes/_guest/index'
+import { Route as GuestTermsOfServiceRouteImport } from './routes/_guest/terms-of-service'
+import { Route as GuestSitemapRouteImport } from './routes/_guest/sitemap'
+import { Route as GuestPrivacyPolicyRouteImport } from './routes/_guest/privacy-policy'
 import { Route as GuestPharmacyRouteImport } from './routes/_guest/pharmacy'
 import { Route as GuestLoginRouteImport } from './routes/_guest/login'
 import { Route as GuestGalleryRouteImport } from './routes/_guest/gallery'
@@ -22,8 +25,12 @@ import { Route as GuestContactRouteImport } from './routes/_guest/contact'
 import { Route as GuestCareerRouteImport } from './routes/_guest/career'
 import { Route as GuestAboutRouteImport } from './routes/_guest/about'
 import { Route as ProtectedAdminIndexRouteImport } from './routes/_protected/admin/index'
+import { Route as ProtectedAdminJobsRouteImport } from './routes/_protected/admin/jobs'
+import { Route as ProtectedAdminDoctorsRouteImport } from './routes/_protected/admin/doctors'
 import { Route as ProtectedAdminContactsRouteImport } from './routes/_protected/admin/contacts'
+import { Route as ProtectedAdminCareerApplicationsRouteImport } from './routes/_protected/admin/career-applications'
 import { Route as GuestServicesServiceRouteImport } from './routes/_guest/services/$service'
+import { Route as GuestDoctorsDoctorIdRouteImport } from './routes/_guest/doctors.$doctorId'
 
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
@@ -36,6 +43,21 @@ const GuestRoute = GuestRouteImport.update({
 const GuestIndexRoute = GuestIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestTermsOfServiceRoute = GuestTermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestSitemapRoute = GuestSitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestPrivacyPolicyRoute = GuestPrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => GuestRoute,
 } as any)
 const GuestPharmacyRoute = GuestPharmacyRouteImport.update({
@@ -88,45 +110,80 @@ const ProtectedAdminIndexRoute = ProtectedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ProtectedAdminJobsRoute = ProtectedAdminJobsRouteImport.update({
+  id: '/admin/jobs',
+  path: '/admin/jobs',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedAdminDoctorsRoute = ProtectedAdminDoctorsRouteImport.update({
+  id: '/admin/doctors',
+  path: '/admin/doctors',
+  getParentRoute: () => ProtectedRoute,
+} as any)
 const ProtectedAdminContactsRoute = ProtectedAdminContactsRouteImport.update({
   id: '/admin/contacts',
   path: '/admin/contacts',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ProtectedAdminCareerApplicationsRoute =
+  ProtectedAdminCareerApplicationsRouteImport.update({
+    id: '/admin/career-applications',
+    path: '/admin/career-applications',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
 const GuestServicesServiceRoute = GuestServicesServiceRouteImport.update({
   id: '/services/$service',
   path: '/services/$service',
   getParentRoute: () => GuestRoute,
 } as any)
+const GuestDoctorsDoctorIdRoute = GuestDoctorsDoctorIdRouteImport.update({
+  id: '/$doctorId',
+  path: '/$doctorId',
+  getParentRoute: () => GuestDoctorsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof GuestIndexRoute
   '/about': typeof GuestAboutRoute
   '/career': typeof GuestCareerRoute
   '/contact': typeof GuestContactRoute
   '/departments': typeof GuestDepartmentsRoute
-  '/doctors': typeof GuestDoctorsRoute
+  '/doctors': typeof GuestDoctorsRouteWithChildren
   '/frontend': typeof GuestFrontendRoute
   '/gallery': typeof GuestGalleryRoute
   '/login': typeof GuestLoginRoute
   '/pharmacy': typeof GuestPharmacyRoute
-  '/': typeof GuestIndexRoute
+  '/privacy-policy': typeof GuestPrivacyPolicyRoute
+  '/sitemap': typeof GuestSitemapRoute
+  '/terms-of-service': typeof GuestTermsOfServiceRoute
+  '/doctors/$doctorId': typeof GuestDoctorsDoctorIdRoute
   '/services/$service': typeof GuestServicesServiceRoute
+  '/admin/career-applications': typeof ProtectedAdminCareerApplicationsRoute
   '/admin/contacts': typeof ProtectedAdminContactsRoute
-  '/admin': typeof ProtectedAdminIndexRoute
+  '/admin/doctors': typeof ProtectedAdminDoctorsRoute
+  '/admin/jobs': typeof ProtectedAdminJobsRoute
+  '/admin/': typeof ProtectedAdminIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof GuestIndexRoute
   '/about': typeof GuestAboutRoute
   '/career': typeof GuestCareerRoute
   '/contact': typeof GuestContactRoute
   '/departments': typeof GuestDepartmentsRoute
-  '/doctors': typeof GuestDoctorsRoute
+  '/doctors': typeof GuestDoctorsRouteWithChildren
   '/frontend': typeof GuestFrontendRoute
   '/gallery': typeof GuestGalleryRoute
   '/login': typeof GuestLoginRoute
   '/pharmacy': typeof GuestPharmacyRoute
-  '/': typeof GuestIndexRoute
+  '/privacy-policy': typeof GuestPrivacyPolicyRoute
+  '/sitemap': typeof GuestSitemapRoute
+  '/terms-of-service': typeof GuestTermsOfServiceRoute
+  '/doctors/$doctorId': typeof GuestDoctorsDoctorIdRoute
   '/services/$service': typeof GuestServicesServiceRoute
+  '/admin/career-applications': typeof ProtectedAdminCareerApplicationsRoute
   '/admin/contacts': typeof ProtectedAdminContactsRoute
+  '/admin/doctors': typeof ProtectedAdminDoctorsRoute
+  '/admin/jobs': typeof ProtectedAdminJobsRoute
   '/admin': typeof ProtectedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -137,19 +194,27 @@ export interface FileRoutesById {
   '/_guest/career': typeof GuestCareerRoute
   '/_guest/contact': typeof GuestContactRoute
   '/_guest/departments': typeof GuestDepartmentsRoute
-  '/_guest/doctors': typeof GuestDoctorsRoute
+  '/_guest/doctors': typeof GuestDoctorsRouteWithChildren
   '/_guest/frontend': typeof GuestFrontendRoute
   '/_guest/gallery': typeof GuestGalleryRoute
   '/_guest/login': typeof GuestLoginRoute
   '/_guest/pharmacy': typeof GuestPharmacyRoute
+  '/_guest/privacy-policy': typeof GuestPrivacyPolicyRoute
+  '/_guest/sitemap': typeof GuestSitemapRoute
+  '/_guest/terms-of-service': typeof GuestTermsOfServiceRoute
   '/_guest/': typeof GuestIndexRoute
+  '/_guest/doctors/$doctorId': typeof GuestDoctorsDoctorIdRoute
   '/_guest/services/$service': typeof GuestServicesServiceRoute
+  '/_protected/admin/career-applications': typeof ProtectedAdminCareerApplicationsRoute
   '/_protected/admin/contacts': typeof ProtectedAdminContactsRoute
+  '/_protected/admin/doctors': typeof ProtectedAdminDoctorsRoute
+  '/_protected/admin/jobs': typeof ProtectedAdminJobsRoute
   '/_protected/admin/': typeof ProtectedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/about'
     | '/career'
     | '/contact'
@@ -159,12 +224,19 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/login'
     | '/pharmacy'
-    | '/'
+    | '/privacy-policy'
+    | '/sitemap'
+    | '/terms-of-service'
+    | '/doctors/$doctorId'
     | '/services/$service'
+    | '/admin/career-applications'
     | '/admin/contacts'
-    | '/admin'
+    | '/admin/doctors'
+    | '/admin/jobs'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/about'
     | '/career'
     | '/contact'
@@ -174,9 +246,15 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/login'
     | '/pharmacy'
-    | '/'
+    | '/privacy-policy'
+    | '/sitemap'
+    | '/terms-of-service'
+    | '/doctors/$doctorId'
     | '/services/$service'
+    | '/admin/career-applications'
     | '/admin/contacts'
+    | '/admin/doctors'
+    | '/admin/jobs'
     | '/admin'
   id:
     | '__root__'
@@ -191,9 +269,16 @@ export interface FileRouteTypes {
     | '/_guest/gallery'
     | '/_guest/login'
     | '/_guest/pharmacy'
+    | '/_guest/privacy-policy'
+    | '/_guest/sitemap'
+    | '/_guest/terms-of-service'
     | '/_guest/'
+    | '/_guest/doctors/$doctorId'
     | '/_guest/services/$service'
+    | '/_protected/admin/career-applications'
     | '/_protected/admin/contacts'
+    | '/_protected/admin/doctors'
+    | '/_protected/admin/jobs'
     | '/_protected/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -207,14 +292,14 @@ declare module '@tanstack/react-router' {
     '/_protected': {
       id: '/_protected'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_guest': {
       id: '/_guest'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof GuestRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -223,6 +308,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof GuestIndexRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/terms-of-service': {
+      id: '/_guest/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof GuestTermsOfServiceRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/sitemap': {
+      id: '/_guest/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof GuestSitemapRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/privacy-policy': {
+      id: '/_guest/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof GuestPrivacyPolicyRouteImport
       parentRoute: typeof GuestRoute
     }
     '/_guest/pharmacy': {
@@ -291,8 +397,22 @@ declare module '@tanstack/react-router' {
     '/_protected/admin/': {
       id: '/_protected/admin/'
       path: '/admin'
-      fullPath: '/admin'
+      fullPath: '/admin/'
       preLoaderRoute: typeof ProtectedAdminIndexRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/admin/jobs': {
+      id: '/_protected/admin/jobs'
+      path: '/admin/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof ProtectedAdminJobsRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/admin/doctors': {
+      id: '/_protected/admin/doctors'
+      path: '/admin/doctors'
+      fullPath: '/admin/doctors'
+      preLoaderRoute: typeof ProtectedAdminDoctorsRouteImport
       parentRoute: typeof ProtectedRoute
     }
     '/_protected/admin/contacts': {
@@ -302,6 +422,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminContactsRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/_protected/admin/career-applications': {
+      id: '/_protected/admin/career-applications'
+      path: '/admin/career-applications'
+      fullPath: '/admin/career-applications'
+      preLoaderRoute: typeof ProtectedAdminCareerApplicationsRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
     '/_guest/services/$service': {
       id: '/_guest/services/$service'
       path: '/services/$service'
@@ -309,19 +436,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestServicesServiceRouteImport
       parentRoute: typeof GuestRoute
     }
+    '/_guest/doctors/$doctorId': {
+      id: '/_guest/doctors/$doctorId'
+      path: '/$doctorId'
+      fullPath: '/doctors/$doctorId'
+      preLoaderRoute: typeof GuestDoctorsDoctorIdRouteImport
+      parentRoute: typeof GuestDoctorsRoute
+    }
   }
 }
+
+interface GuestDoctorsRouteChildren {
+  GuestDoctorsDoctorIdRoute: typeof GuestDoctorsDoctorIdRoute
+}
+
+const GuestDoctorsRouteChildren: GuestDoctorsRouteChildren = {
+  GuestDoctorsDoctorIdRoute: GuestDoctorsDoctorIdRoute,
+}
+
+const GuestDoctorsRouteWithChildren = GuestDoctorsRoute._addFileChildren(
+  GuestDoctorsRouteChildren,
+)
 
 interface GuestRouteChildren {
   GuestAboutRoute: typeof GuestAboutRoute
   GuestCareerRoute: typeof GuestCareerRoute
   GuestContactRoute: typeof GuestContactRoute
   GuestDepartmentsRoute: typeof GuestDepartmentsRoute
-  GuestDoctorsRoute: typeof GuestDoctorsRoute
+  GuestDoctorsRoute: typeof GuestDoctorsRouteWithChildren
   GuestFrontendRoute: typeof GuestFrontendRoute
   GuestGalleryRoute: typeof GuestGalleryRoute
   GuestLoginRoute: typeof GuestLoginRoute
   GuestPharmacyRoute: typeof GuestPharmacyRoute
+  GuestPrivacyPolicyRoute: typeof GuestPrivacyPolicyRoute
+  GuestSitemapRoute: typeof GuestSitemapRoute
+  GuestTermsOfServiceRoute: typeof GuestTermsOfServiceRoute
   GuestIndexRoute: typeof GuestIndexRoute
   GuestServicesServiceRoute: typeof GuestServicesServiceRoute
 }
@@ -331,11 +480,14 @@ const GuestRouteChildren: GuestRouteChildren = {
   GuestCareerRoute: GuestCareerRoute,
   GuestContactRoute: GuestContactRoute,
   GuestDepartmentsRoute: GuestDepartmentsRoute,
-  GuestDoctorsRoute: GuestDoctorsRoute,
+  GuestDoctorsRoute: GuestDoctorsRouteWithChildren,
   GuestFrontendRoute: GuestFrontendRoute,
   GuestGalleryRoute: GuestGalleryRoute,
   GuestLoginRoute: GuestLoginRoute,
   GuestPharmacyRoute: GuestPharmacyRoute,
+  GuestPrivacyPolicyRoute: GuestPrivacyPolicyRoute,
+  GuestSitemapRoute: GuestSitemapRoute,
+  GuestTermsOfServiceRoute: GuestTermsOfServiceRoute,
   GuestIndexRoute: GuestIndexRoute,
   GuestServicesServiceRoute: GuestServicesServiceRoute,
 }
@@ -343,12 +495,18 @@ const GuestRouteChildren: GuestRouteChildren = {
 const GuestRouteWithChildren = GuestRoute._addFileChildren(GuestRouteChildren)
 
 interface ProtectedRouteChildren {
+  ProtectedAdminCareerApplicationsRoute: typeof ProtectedAdminCareerApplicationsRoute
   ProtectedAdminContactsRoute: typeof ProtectedAdminContactsRoute
+  ProtectedAdminDoctorsRoute: typeof ProtectedAdminDoctorsRoute
+  ProtectedAdminJobsRoute: typeof ProtectedAdminJobsRoute
   ProtectedAdminIndexRoute: typeof ProtectedAdminIndexRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedAdminCareerApplicationsRoute: ProtectedAdminCareerApplicationsRoute,
   ProtectedAdminContactsRoute: ProtectedAdminContactsRoute,
+  ProtectedAdminDoctorsRoute: ProtectedAdminDoctorsRoute,
+  ProtectedAdminJobsRoute: ProtectedAdminJobsRoute,
   ProtectedAdminIndexRoute: ProtectedAdminIndexRoute,
 }
 

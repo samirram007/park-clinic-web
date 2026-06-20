@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
  
+import SEO from '@/components/SEO';
 import { useAuth } from '@/features/auth/contexts/auth-context';
 import { useNavigate } from '@tanstack/react-router';
 import {   Lock, Mail, AlertCircle } from 'lucide-react';
@@ -40,7 +41,15 @@ export const Login: React.FC = () => {
   const isSubmitting = mutation.isPending || (mutation.isSuccess && !isAuthenticated);
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-slate-50 p-6">
+    <>
+      <SEO
+        title="Admin Login"
+        description="Sign in to the Park Sonoscan Clinic admin dashboard to manage contact messages, job posts, and more."
+        canonicalUrl="/login"
+        noindex
+      />
+      <div className="min-h-[80vh] flex items-center justify-center bg-slate-50 p-6">
+      <h1 className="sr-only">Admin Login</h1>
       <Card className="w-full max-w-md shadow-xl rounded-3xl border border-slate-100">
         <CardHeader className="text-center pb-2">
           <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/20">
@@ -104,5 +113,6 @@ export const Login: React.FC = () => {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 };

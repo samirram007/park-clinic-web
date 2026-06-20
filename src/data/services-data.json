@@ -12,9 +12,8 @@
       "Personalized risk plans"
     ],
     "features": ["Heart checkups", "Angioplasty", "Cardiac surgery"],
-    "component":"DiagnosticServices"
+    "component": "DiagnosticServices"
   },
-
   {
     "department": "Indoor Services",
     "title": "Indoor Services",
@@ -28,7 +27,7 @@
       "Post-op recovery care"
     ],
     "features": ["General surgery", "Minimally invasive", "Post-op care"],
-    "component":"IndoorServices"
+    "component": "IndoorServices"
   },
   {
     "department": "Outdoor Services",
@@ -43,21 +42,105 @@
       "Post-op recovery care"
     ],
     "features": ["General surgery", "Minimally invasive", "Post-op care"],
-    "component":"OutdoorServices"
-  }
-  ,
+    "component": "OutdoorServices"
+  },
   {
-    "department": "XXX Services",
-    "title": "Outdoor Services",
-    "tagline": "Safe, precise, and minimally invasive care.",
-    "description": "State-of-the-art surgical procedures across specialties with a focus on recovery and safety.",
-    "image": "/images/dept-ortho.png",
-    "icon": "ScalpelIcon",
+    "department": "Brain & Spine Surgery (Neurosciences)",
+    "title": "Brain & Spine Surgery (Neurosciences)",
+    "tagline": "Advanced neurosurgical care with cutting-edge technology.",
+    "description": "Park Clinic is a recognised leader in neurosciences, boasting one of the most advanced neurosurgical setups in the region.",
+    "image": "/images/dept-cardio.jpg",
     "highlights": [
-      "Minimally invasive",
-      "Modern operating suites",
-      "Post-op recovery care"
+      "Intraoperative Neuronavigation",
+      "Neuroendoscopy",
+      "Specialized Neuro-HDU"
     ],
-    "features": ["General surgery", "Minimally invasive", "Post-op care"]
+    "features": [
+      "Treatments & OTs: The department is equipped with 5 dedicated neurosurgical operating theatres. It was among the first in the country to utilise Intraoperative Neuronavigation and Neuroendoscopy.",
+      "Key Doctors: Experienced neurosurgeons performing high-precision procedures for brain tumours, neurovascular disorders, and paediatric neurosurgery.",
+      "Post-Operative Care: A specialized Neuro-HDU and ITU ensure 24/7 monitoring by a three-tier medical team."
+    ]
+  },
+  {
+    "department": "Orthopaedics & Spine Surgery",
+    "title": "Orthopaedics & Spine Surgery",
+    "tagline": "Restorative surgeries and advanced spine care.",
+    "description": "The orthopaedic department focuses on restorative surgeries and advanced spine care.",
+    "image": "/images/dept-ortho.png",
+    "highlights": [
+      "Joint Replacements",
+      "Park Spine Centre",
+      "High success rates"
+    ],
+    "features": [
+      "Treatments & OTs: Specialized in Joint Replacements (Knee and Hip), Arthroscopy, and complex trauma management.",
+      "Park Spine Centre: A dedicated wing for spondylitis, spinal deformities, and disc surgeries.",
+      "Patient Satisfaction: High success rates in spine surgeries have made it a preferred center for Kolkata Traffic Police and other professional groups."
+    ]
+  },
+  {
+    "department": "Paediatrics & Childcare",
+    "title": "Paediatrics & Childcare",
+    "tagline": "Subsidised yet superior care for newborns and children.",
+    "description": "Merging with the Park Children's Centre in 2009, this department provides subsidised yet superior care for newborns and children.",
+    "image": "/images/dept-paed.png",
+    "highlights": [
+      "Pediatric Operation Theatres",
+      "Anubha Memorial Neonatal Ward",
+      "Dedicated NICU/PICU"
+    ],
+    "features": [
+      "Treatments & OTs: Dedicated Pediatric Operation Theatres handle surgeries for congenital anomalies, paediatric urology, and neonatal emergencies.",
+      "Facilities: The Anubha Memorial Neonatal Ward features advanced neonatal ventilators and a specialized NICU/PICU for critical paediatric care.",
+      "Key Doctors: Dr. Subir Kr. Chatterjee (Emeritus/Consultant), Dr. Ashoke Kr. Basu"
+    ]
+  },
+  {
+    "department": "ENT & Maxillofacial Surgery",
+    "title": "ENT & Maxillofacial Surgery",
+    "tagline": "Comprehensive care for ear, nose, throat, and face.",
+    "description": "Comprehensive care for disorders of the ear, nose, throat, and face.",
+    "image": "/images/dept-pedia.png",
+    "highlights": [
+      "Micro-ear surgeries",
+      "Cochlear implants",
+      "Functional Endoscopic Sinus Surgery"
+    ],
+    "features": [
+      "Treatments: Micro-ear surgeries, Cochlear implants, and functional endoscopic sinus surgery (FESS).",
+      "Key Doctors: Dr. Amit Roy and Dr. Manish Mukul Ghosh (Plastic & Maxillofacial Surgery)"
+    ]
+  },
+  {
+    "department": "General, Uro & Laparoscopic Surgery",
+    "title": "General, Uro & Laparoscopic Surgery",
+    "tagline": "Minimally invasive techniques for faster recovery.",
+    "description": "The hospital utilizes minimally invasive techniques to reduce post-operative pain and recovery time.",
+    "image": "/images/dept-emergency.jpg",
+    "highlights": [
+      "Laparoscopic cholecystectomy",
+      "Hernia repairs",
+      "Advanced urological procedures"
+    ],
+    "features": [
+      "Treatments: Laparoscopic cholecystectomy, hernia repairs, and advanced urological procedures like TURP and kidney stone removal.",
+      "Key Doctors: Dr. Kalyan Sarkar (Urology)"
+    ]
+  },
+  {
+    "department": "Laboratory Testing",
+    "title": "Laboratory Testing",
+    "tagline": "Advanced diagnostic lab services with rapid results.",
+    "description": "Advanced diagnostic laboratory services with comprehensive testing panels and rapid result delivery.",
+    "image": "/images/herobg.jpg",
+    "highlights": [
+      "Comprehensive testing panels",
+      "Rapid result delivery",
+      "Advanced pathology"
+    ],
+    "features": [
+      "Blood Tests: Complete blood count, lipid profiles, liver function tests, and more.",
+      "Pathology: Advanced pathological analysis with accurate and timely reporting."
+    ]
   }
 ]

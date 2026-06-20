@@ -15,15 +15,17 @@ import { MessageDetailsSheet } from './MessageDetailsSheet';
 export const ContactMessageComponent: React.FC = () => {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'read' | 'unread' | 'important'>('unread');
   const [replyMessage, setReplyMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['contact-messages', page, search, filter],
+    queryKey: ['contact-messages', page, perPage, search, filter],
     queryFn: () => contactMessageService.getMessages({ 
       page, 
+      per_page: perPage,
       search, 
       status: (filter === 'all' || filter === 'important') ? undefined : filter,
       important: filter === 'important' ? true : undefined
@@ -187,7 +189,7 @@ export const ContactMessageComponent: React.FC = () => {
               <RefreshCw size={16} />
             </Button>
             <div className="hidden sm:flex">
-              <PaginationControls page={page} lastPage={meta?.last_page || 1} onPageChange={setPage} compact />
+              <PaginationControls page={page} lastPage={meta?.last_page || 1} onPageChange={setPage} compact perPage={perPage} onPerPageChange={(v) => { setPerPage(v); setPage(1) }} />
             </div>
           </div>
         </div>
@@ -207,7 +209,7 @@ export const ContactMessageComponent: React.FC = () => {
               />
             ))}
             <div className="flex justify-end pt-4">
-              <PaginationControls page={page} lastPage={meta?.last_page || 1} onPageChange={setPage} />
+              <PaginationControls page={page} lastPage={meta?.last_page || 1} onPageChange={setPage} perPage={perPage} onPerPageChange={(v) => { setPerPage(v); setPage(1) }} />
             </div>
           </>
         )}

@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { HelmetProvider } from 'react-helmet-async'
 
 import * as TanStackQueryProvider from './integrations/tanstack-query/root-provider.tsx'
 import { AuthProvider } from './features/auth/contexts/auth-context.tsx'
@@ -8,6 +9,8 @@ import { AuthProvider } from './features/auth/contexts/auth-context.tsx'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
+// Ignore missing type declarations for CSS side-effect import
+// @ts-ignore
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 
@@ -63,11 +66,13 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </TanStackQueryProvider.Provider>
+      <HelmetProvider>
+        <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </TanStackQueryProvider.Provider>
+      </HelmetProvider>
     </StrictMode>,
   )
 }

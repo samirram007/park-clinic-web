@@ -1,5 +1,6 @@
 import { emergencyBannerData } from '@/data/home/emergency-banner-section.data'
 
+
 export default function EmergencyBannerSection() {
   return (
     <section className="bg-blue-600 text-white py-16">
@@ -12,9 +13,11 @@ export default function EmergencyBannerSection() {
             </p>
             <p className="text-xl font-light text-white">{emergencyBannerData?.phoneNumber}</p>
           </div>
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-light hover:bg-gray-100 transition whitespace-nowrap ml-0 md:ml-8">
-            {emergencyBannerData.buttonText}
-          </button>
+          <a href={`tel:${emergencyBannerData?.phoneNumber?.replace(/\s/g, '')}`}>
+            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-light hover:bg-gray-100 transition whitespace-nowrap ml-0 md:ml-8">
+              {emergencyBannerData.buttonText}
+            </button>
+          </a>
         </div>
       </div>
     </section>
