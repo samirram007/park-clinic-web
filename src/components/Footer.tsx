@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Mail, Phone, MapPin } from 'lucide-react'
+import { Mail, MapPin, Phone } from 'lucide-react'
 import { company } from '@/lib/company'
 
 export default function Footer() {
@@ -22,25 +22,116 @@ export default function Footer() {
           <div>
             <h4 className="font-light mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li><Link to="/" className="hover:text-gray-800">Home</Link></li>
-              <li><Link to="/about" className="hover:text-gray-800">About Us</Link></li>
-              <li><Link to="/pharmacy" className="hover:text-gray-800">Pharmacy</Link></li>
-              <li><Link to="/admin" className="hover:text-gray-800 font-semibold text-blue-600">Admin Login</Link></li>
+              <li>
+                <Link to="/" className="hover:text-gray-800">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-gray-800">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/pharmacy" className="hover:text-gray-800">
+                  Pharmacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/admin"
+                  className="hover:text-gray-800 font-semibold text-blue-600"
+                >
+                  Admin Login
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-light mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li><Link to="/services/$service" params={{ service: 'Indoor Services' }} className="hover:text-gray-800">Indoor Services</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'Diagnostic Services' }} className="hover:text-gray-800">Diagnostic Services</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'Outdoor Services' }} className="hover:text-gray-800">Outdoor Services</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'Brain & Spine Surgery (Neurosciences)' }} className="hover:text-gray-800">Brain &amp; Spine Surgery</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'Orthopaedics & Spine Surgery' }} className="hover:text-gray-800">Orthopaedics &amp; Spine</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'Paediatrics & Childcare' }} className="hover:text-gray-800">Paediatrics &amp; Childcare</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'ENT & Maxillofacial Surgery' }} className="hover:text-gray-800">ENT &amp; Maxillofacial</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'General, Uro & Laparoscopic Surgery' }} className="hover:text-gray-800">General &amp; Laparoscopic</Link></li>
-              <li><Link to="/services/$service" params={{ service: 'Laboratory Testing' }} className="hover:text-gray-800">Laboratory Testing</Link></li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Indoor Services' }}
+                  className="hover:text-gray-800"
+                >
+                  Indoor Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Diagnostic Services' }}
+                  className="hover:text-gray-800"
+                >
+                  Diagnostic Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Outdoor Services' }}
+                  className="hover:text-gray-800"
+                >
+                  Outdoor Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Brain & Spine Surgery (Neurosciences)' }}
+                  className="hover:text-gray-800"
+                >
+                  Brain &amp; Spine Surgery
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Orthopaedics & Spine Surgery' }}
+                  className="hover:text-gray-800"
+                >
+                  Orthopaedics &amp; Spine
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Paediatrics & Childcare' }}
+                  className="hover:text-gray-800"
+                >
+                  Paediatrics &amp; Childcare
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'ENT & Maxillofacial Surgery' }}
+                  className="hover:text-gray-800"
+                >
+                  ENT &amp; Maxillofacial
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'General, Uro & Laparoscopic Surgery' }}
+                  className="hover:text-gray-800"
+                >
+                  General &amp; Laparoscopic
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/services/$service"
+                  params={{ service: 'Laboratory Testing' }}
+                  className="hover:text-gray-800"
+                >
+                  Laboratory Testing
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -66,12 +157,25 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-400">
-              &copy; 2024 - {new Date().getFullYear()} {company.shortName}. All rights reserved.
+              &copy; 2024 - {new Date().getFullYear()} {company.shortName}. All
+              rights reserved.
             </p>
             <div className="flex gap-4 mt-4 md:mt-0">
-              <Link to="/privacy-policy" className="text-gray-400 hover:text-white">Privacy Policy</Link>
-              <Link to="/terms-of-service" className="text-gray-400 hover:text-white">Terms of Service</Link>
-              <Link to="/sitemap" className="text-gray-400 hover:text-white">Sitemap</Link>
+              <Link
+                to="/privacy-policy"
+                className="text-gray-400 hover:text-white"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="/terms-of-service"
+                className="text-gray-400 hover:text-white"
+              >
+                Terms of Service
+              </Link>
+              <Link to="/sitemap" className="text-gray-400 hover:text-white">
+                Sitemap
+              </Link>
             </div>
           </div>
         </div>

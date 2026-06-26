@@ -1,6 +1,9 @@
-import { type ImgHTMLAttributes } from 'react'
+import type { ImgHTMLAttributes } from 'react'
 
-interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
+interface OptimizedImageProps extends Omit<
+  ImgHTMLAttributes<HTMLImageElement>,
+  'src'
+> {
   src: string
   /** Aspect ratio as width/height string (e.g. "16/9", "4/3", "1/1") */
   aspectRatio?: string
@@ -53,9 +56,7 @@ export default function OptimizedImage({
   return (
     <picture>
       {/* WebP source (if convertible) */}
-      {webpSrc && (
-        <source srcSet={webpSrc} type="image/webp" />
-      )}
+      {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
       {/* Fallback to original format */}
       <source srcSet={src} type={mimeType} />
       {/* Actual img element */}

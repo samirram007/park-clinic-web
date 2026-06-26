@@ -1,17 +1,20 @@
-import React from 'react';
-import { Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React from 'react'
+import { Star } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface ImportantToggleProps {
-  isImportant: boolean;
-  onToggle: (e: React.MouseEvent) => void; 
+  isImportant: boolean
+  onToggle: (e: React.MouseEvent) => void
 }
 
-export const ImportantToggle: React.FC<ImportantToggleProps> = ({ isImportant, onToggle }) => {
+export const ImportantToggle: React.FC<ImportantToggleProps> = ({
+  isImportant,
+  onToggle,
+}) => {
   const handleOnClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onToggle(e); 
-  };
+    e.stopPropagation()
+    onToggle(e)
+  }
 
   return (
     <Button
@@ -22,5 +25,5 @@ export const ImportantToggle: React.FC<ImportantToggleProps> = ({ isImportant, o
     >
       <Star size={16} fill={isImportant ? 'currentColor' : 'none'} />
     </Button>
-  );
-};
+  )
+}

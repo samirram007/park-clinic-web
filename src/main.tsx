@@ -4,7 +4,10 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { HelmetProvider } from 'react-helmet-async'
 
 import * as TanStackQueryProvider from './integrations/tanstack-query/root-provider.tsx'
-import { AuthProvider } from './features/auth/contexts/auth-context.tsx'
+import {
+  AuthProvider,
+  useAuth,
+} from './features/auth/contexts/auth-context.tsx'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -13,8 +16,6 @@ import { routeTree } from './routeTree.gen'
 // @ts-ignore
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
-
-import { useAuth } from './features/auth/contexts/auth-context.tsx'
 
 // Create a new router instance
 
@@ -40,7 +41,7 @@ declare module '@tanstack/react-router' {
 
 const App = () => {
   const { isAuthenticated, isLoading } = useAuth()
-  
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -54,7 +55,7 @@ const App = () => {
     context: {
       ...TanStackQueryProviderContext,
       isAuthenticated,
-    }
+    },
   })
 
   return <RouterProvider router={router} />

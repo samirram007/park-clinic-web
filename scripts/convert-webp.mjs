@@ -19,7 +19,9 @@ async function convertToWebP(filePath) {
     const stat = statSync(outputPath)
     const srcStat = statSync(filePath)
     if (stat.mtimeMs > srcStat.mtimeMs) {
-      console.log(`  ⏭️  Skipping (already up-to-date): ${parse(filePath).base}`)
+      console.log(
+        `  ⏭️  Skipping (already up-to-date): ${parse(filePath).base}`,
+      )
       return
     }
   } catch {
@@ -27,10 +29,10 @@ async function convertToWebP(filePath) {
   }
 
   try {
-    await sharp(filePath)
-      .webp({ quality: 80, effort: 4 })
-      .toFile(outputPath)
-    console.log(`  ✅ Converted: ${parse(filePath).base} → ${parse(filePath).name}.webp`)
+    await sharp(filePath).webp({ quality: 80, effort: 4 }).toFile(outputPath)
+    console.log(
+      `  ✅ Converted: ${parse(filePath).base} → ${parse(filePath).name}.webp`,
+    )
   } catch (err) {
     console.error(`  ❌ Failed: ${parse(filePath).base} — ${err.message}`)
   }

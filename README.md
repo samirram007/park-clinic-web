@@ -6,12 +6,12 @@ The application uses Vite environment variables (prefixed with `VITE_`) for conf
 
 ### File Overview
 
-| File | Purpose | Committed? |
-|------|---------|-----------|
-| `.env` | Shared defaults (loaded in all modes) | ✅ Yes |
-| `.env.local` | Local overrides (ignored by git) | ❌ No |
-| `.env.production` | Production-only overrides | ✅ Yes |
-| `.env.example` | Template for new developers | ✅ Yes |
+| File              | Purpose                               | Committed? |
+| ----------------- | ------------------------------------- | ---------- |
+| `.env`            | Shared defaults (loaded in all modes) | ✅ Yes     |
+| `.env.local`      | Local overrides (ignored by git)      | ❌ No      |
+| `.env.production` | Production-only overrides             | ✅ Yes     |
+| `.env.example`    | Template for new developers           | ✅ Yes     |
 
 ### Quick Start
 
@@ -42,22 +42,22 @@ Vite loads `.env` files in this order (later files override earlier ones):
 
 All `VITE_` variables are declared in [`src/vite-env.d.ts`](./src/vite-env.d.ts):
 
-| Variable | Description |
-|----------|-------------|
-| `VITE_API_URL` | Direct API URL for axios requests |
-| `VITE_API_BASE_URL` | Backend origin for Vite dev proxy |
-| `VITE_API_SECURE` | Whether the backend uses HTTPS |
-| `VITE_AUTH_STORAGE_TYPE` | Auth storage: `localStorage` or `cookie` |
-| `VITE_BASE_URL` | Vite base path (typically `/`) |
-| `VITE_SITE_URL` | Canonical site URL (sitemap, OG tags) |
-| `VITE_COMPANY_NAME` | Full clinic name |
-| `VITE_COMPANY_SHORT_NAME` | Short clinic name |
-| `VITE_COMPANY_ADDRESS` | Clinic address |
-| `VITE_COMPANY_PHONE` | Full phone display |
-| `VITE_COMPANY_PHONE_SHORT` | Short phone number |
-| `VITE_COMPANY_EMAIL` | Contact email |
-| `VITE_GOOGLE_VERIFICATION` | Google Search Console verification code |
-| `VITE_BING_VERIFICATION` | Bing Webmaster Tools verification code |
+| Variable                   | Description                              |
+| -------------------------- | ---------------------------------------- |
+| `VITE_API_URL`             | Direct API URL for axios requests        |
+| `VITE_API_BASE_URL`        | Backend origin for Vite dev proxy        |
+| `VITE_API_SECURE`          | Whether the backend uses HTTPS           |
+| `VITE_AUTH_STORAGE_TYPE`   | Auth storage: `localStorage` or `cookie` |
+| `VITE_BASE_URL`            | Vite base path (typically `/`)           |
+| `VITE_SITE_URL`            | Canonical site URL (sitemap, OG tags)    |
+| `VITE_COMPANY_NAME`        | Full clinic name                         |
+| `VITE_COMPANY_SHORT_NAME`  | Short clinic name                        |
+| `VITE_COMPANY_ADDRESS`     | Clinic address                           |
+| `VITE_COMPANY_PHONE`       | Full phone display                       |
+| `VITE_COMPANY_PHONE_SHORT` | Short phone number                       |
+| `VITE_COMPANY_EMAIL`       | Contact email                            |
+| `VITE_GOOGLE_VERIFICATION` | Google Search Console verification code  |
+| `VITE_BING_VERIFICATION`   | Bing Webmaster Tools verification code   |
 
 ### Production Build
 
@@ -91,9 +91,7 @@ npm run test
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
-
 ## Linting & Formatting
-
 
 This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
 
@@ -103,7 +101,6 @@ npm run format
 npm run check
 ```
 
-
 ## Shadcn
 
 Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
@@ -112,9 +109,8 @@ Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 pnpx shadcn@latest add button
 ```
 
-
-
 ## Routing
+
 This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
 
 ### Adding A Route
@@ -130,7 +126,7 @@ Now that you have two routes you can use a `Link` component to navigate between 
 To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
 
 ```tsx
-import { Link } from "@tanstack/react-router";
+import { Link } from '@tanstack/react-router'
 ```
 
 Then anywhere in your JSX you can use it like so:
@@ -153,7 +149,7 @@ Here is an example layout that includes a header:
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
-import { Link } from "@tanstack/react-router";
+import { Link } from '@tanstack/react-router'
 
 export const Route = createRootRoute({
   component: () => (
@@ -175,7 +171,6 @@ The `<TanStackRouterDevtools />` component is not required so you can remove it 
 
 More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
 
-
 ## Data Fetching
 
 There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
@@ -185,26 +180,26 @@ For example:
 ```tsx
 const peopleRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/people",
+  path: '/people',
   loader: async () => {
-    const response = await fetch("https://swapi.dev/api/people");
+    const response = await fetch('https://swapi.dev/api/people')
     return response.json() as Promise<{
       results: {
-        name: string;
-      }[];
-    }>;
+        name: string
+      }[]
+    }>
   },
   component: () => {
-    const data = peopleRoute.useLoaderData();
+    const data = peopleRoute.useLoaderData()
     return (
       <ul>
         {data.results.map((person) => (
           <li key={person.name}>{person.name}</li>
         ))}
       </ul>
-    );
+    )
   },
-});
+})
 ```
 
 Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
@@ -222,29 +217,29 @@ npm install @tanstack/react-query @tanstack/react-query-devtools
 Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
 
 ```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // ...
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 // ...
 
 if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
+  const root = ReactDOM.createRoot(rootElement)
 
   root.render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
+    </QueryClientProvider>,
+  )
 }
 ```
 
 You can also add TanStack Query Devtools to the root route (optional).
 
 ```tsx
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -254,25 +249,25 @@ const rootRoute = createRootRoute({
       <TanStackRouterDevtools />
     </>
   ),
-});
+})
 ```
 
 Now you can use `useQuery` to fetch your data.
 
 ```tsx
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query'
 
-import "./App.css";
+import './App.css'
 
 function App() {
   const { data } = useQuery({
-    queryKey: ["people"],
+    queryKey: ['people'],
     queryFn: () =>
-      fetch("https://swapi.dev/api/people")
+      fetch('https://swapi.dev/api/people')
         .then((res) => res.json())
         .then((data) => data.results as { name: string }[]),
     initialData: [],
-  });
+  })
 
   return (
     <div>
@@ -282,10 +277,10 @@ function App() {
         ))}
       </ul>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
@@ -303,24 +298,24 @@ npm install @tanstack/store
 Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
 
 ```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store } from "@tanstack/store";
-import "./App.css";
+import { useStore } from '@tanstack/react-store'
+import { Store } from '@tanstack/store'
+import './App.css'
 
-const countStore = new Store(0);
+const countStore = new Store(0)
 
 function App() {
-  const count = useStore(countStore);
+  const count = useStore(countStore)
   return (
     <div>
       <button onClick={() => countStore.setState((n) => n + 1)}>
         Increment - {count}
       </button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
@@ -328,21 +323,21 @@ One of the many nice features of TanStack Store is the ability to derive state f
 Let's check this out by doubling the count using derived state.
 
 ```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store, Derived } from "@tanstack/store";
-import "./App.css";
+import { useStore } from '@tanstack/react-store'
+import { Store, Derived } from '@tanstack/store'
+import './App.css'
 
-const countStore = new Store(0);
+const countStore = new Store(0)
 
 const doubledStore = new Derived({
   fn: () => countStore.state * 2,
   deps: [countStore],
-});
-doubledStore.mount();
+})
+doubledStore.mount()
 
 function App() {
-  const count = useStore(countStore);
-  const doubledCount = useStore(doubledStore);
+  const count = useStore(countStore)
+  const doubledCount = useStore(doubledStore)
 
   return (
     <div>
@@ -351,10 +346,10 @@ function App() {
       </button>
       <div>Doubled - {doubledCount}</div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.

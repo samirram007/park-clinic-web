@@ -12,5 +12,5 @@ export default function GoogleMap() {
         title="Park Sonoscan Clinic Location"
       ></iframe>
     </div>
-  );
+  )
 }

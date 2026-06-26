@@ -1,12 +1,13 @@
-import type { Doctor } from '@/features/doctors/schema';
+import type { Doctor } from '@/features/doctors/schema'
 
 export const doctorsPageData: {
-  header: { title: string; description: string };
-  doctors: Doctor[];
+  header: { title: string; description: string }
+  doctors: Array<Doctor>
 } = {
   header: {
     title: 'Our Doctors',
-    description: 'Meet our team of experienced medical professionals dedicated to your health and wellness.',
+    description:
+      'Meet our team of experienced medical professionals dedicated to your health and wellness.',
   },
   doctors: [
     {
@@ -68,7 +69,7 @@ export const doctorsPageData: {
       bio: null,
       type: ['consultant'],
       is_active: true,
-    }, 
+    },
     {
       id: 5,
       name: 'Dr. Molay Roy',
@@ -190,4 +191,4 @@ export const doctorsPageData: {
       is_active: true,
     },
   ],
-};
+}

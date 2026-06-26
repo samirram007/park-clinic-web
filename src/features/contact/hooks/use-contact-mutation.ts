@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
-import { contactService } from '@/core/services/api.service'
 import { toast } from 'sonner'
 import type { ContactFormData } from '../schema'
+import { contactService } from '@/core/services/api.service'
 
 export const useContactMutation = (options?: { onSuccess?: () => void }) => {
   return useMutation({
@@ -11,7 +11,9 @@ export const useContactMutation = (options?: { onSuccess?: () => void }) => {
       options?.onSuccess?.()
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Failed to send message. Please try again.'
+      const message =
+        error.response?.data?.message ||
+        'Failed to send message. Please try again.'
       toast.error(message)
     },
   })

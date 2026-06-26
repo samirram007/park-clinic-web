@@ -21,7 +21,9 @@ export default function SEO({
   noindex = false,
 }: SEOProps) {
   const fullTitle = `${title} | ${company.name}`
-  const url = canonicalUrl ? `${company.siteUrl}${canonicalUrl}` : company.siteUrl
+  const url = canonicalUrl
+    ? `${company.siteUrl}${canonicalUrl}`
+    : company.siteUrl
 
   return (
     <Helmet>
@@ -44,8 +46,20 @@ export default function SEO({
       <meta name="twitter:image" content={`${company.siteUrl}${ogImage}`} />
 
       {/* Search Engine Verification (set via .env) */}
-      <meta name="google-site-verification" content={import.meta.env.VITE_GOOGLE_VERIFICATION || 'YOUR_GOOGLE_VERIFICATION_CODE'} />
-      <meta name="msvalidate.01" content={import.meta.env.VITE_BING_VERIFICATION || 'YOUR_BING_VERIFICATION_CODE'} />
+      <meta
+        name="google-site-verification"
+        content={
+          import.meta.env.VITE_GOOGLE_VERIFICATION ||
+          'YOUR_GOOGLE_VERIFICATION_CODE'
+        }
+      />
+      <meta
+        name="msvalidate.01"
+        content={
+          import.meta.env.VITE_BING_VERIFICATION ||
+          'YOUR_BING_VERIFICATION_CODE'
+        }
+      />
 
       {/* Noindex for private pages */}
       {noindex && <meta name="robots" content="noindex, nofollow" />}

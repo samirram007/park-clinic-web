@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { Search } from 'lucide-react';
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Search } from 'lucide-react'
+import type { Variants } from 'framer-motion'
 
-import { doctorsPageData } from '@/data/doctors/doctors-page.data';
-import type { Doctor } from '@/features/doctors/schema';
+import type { Doctor } from '@/features/doctors/schema'
+import { doctorsPageData } from '@/data/doctors/doctors-page.data'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -15,7 +16,7 @@ const containerVariants = {
       delayChildren: 0.1,
     },
   },
-};
+}
 
 const cardVariants = {
   hidden: {
@@ -34,45 +35,39 @@ const cardVariants = {
 
   hover: {
     y: -10,
-    boxShadow: "0 25px 50px -12px rgba(0,0,0,0.1)",
+    boxShadow: '0 25px 50px -12px rgba(0,0,0,0.1)',
     transition: {
       duration: 0.3,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
-} satisfies Variants;
+} satisfies Variants
 
 export function DoctorsPage() {
-  const [filter, setFilter] = useState<string>('All');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filter, setFilter] = useState<string>('All')
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   const categories = [
     'All',
     ...Array.from(
       new Set(
-        doctorsPageData.doctors.map(
-          (doctor: Doctor) => doctor.title ?? ''
-        )
-      )
+        doctorsPageData.doctors.map((doctor: Doctor) => doctor.title ?? ''),
+      ),
     ),
-  ];
+  ]
 
-  const filteredDoctors = doctorsPageData.doctors.filter(
-    (doctor: Doctor) => {
-      const matchesCategory =
-        filter === 'All' || doctor.title === filter;
+  const filteredDoctors = doctorsPageData.doctors.filter((doctor: Doctor) => {
+    const matchesCategory = filter === 'All' || doctor.title === filter
 
-      const matchesSearch = doctor.name
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+    const matchesSearch = doctor.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
 
-      return matchesCategory && matchesSearch;
-    }
-  );
+    return matchesCategory && matchesSearch
+  })
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-20 px-6 flex flex-col items-center">
-
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -180,5 +175,5 @@ export function DoctorsPage() {
         </AnimatePresence>
       </motion.div>
     </div>
-  );
+  )
 }

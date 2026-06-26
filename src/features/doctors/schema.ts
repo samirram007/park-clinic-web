@@ -12,7 +12,9 @@ export const doctorSchema = z.object({
   schedule: z.string().nullable(),
   bio: z.string().nullable(),
   reviews: z.number().nullable(),
-  type: z.array(z.enum(['consultant', 'outdoor'])).min(1, 'At least one type is required'),
+  type: z
+    .array(z.enum(['consultant', 'outdoor']))
+    .min(1, 'At least one type is required'),
   is_active: z.boolean().optional().default(true),
   created_at: z.string().nullable().optional(),
   updated_at: z.string().nullable().optional(),

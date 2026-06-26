@@ -1,5 +1,5 @@
+import type { DoctorSingleResponse, DoctorsListResponse } from '../schema'
 import { apiClient } from '@/lib/axios'
-import type { DoctorsListResponse, DoctorSingleResponse } from '../schema'
 
 /**
  * Generate the API URL for a doctor's photo.
@@ -14,7 +14,9 @@ export function getDoctorImageUrl(doctorId: number): string {
 export const doctorService = {
   getDoctors: async (type?: string) => {
     const params = type ? { type } : {}
-    const { data } = await apiClient.get<DoctorsListResponse>('/doctors', { params })
+    const { data } = await apiClient.get<DoctorsListResponse>('/doctors', {
+      params,
+    })
     return data.data
   },
   getDoctor: async (id: number) => {

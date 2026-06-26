@@ -1,6 +1,11 @@
-import type { Doctor } from '@/features/doctors/schema';
+import type { Doctor } from '@/features/doctors/schema'
 
-export const doctorsSectionData: { tag: string; title: string; description: string; doctors: Doctor[] } = {
+export const doctorsSectionData: {
+  tag: string
+  title: string
+  description: string
+  doctors: Array<Doctor>
+} = {
   tag: 'OUR DOCTORS',
   title: 'Find a Doctor',
   description: 'Find Your Perfect Healthcare Provider',
@@ -170,5 +175,5 @@ export const doctorsSectionData: { tag: string; title: string; description: stri
       type: ['consultant'],
       is_active: true,
     },
-  ]
+  ],
 }

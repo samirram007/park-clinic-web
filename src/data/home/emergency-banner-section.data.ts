@@ -3,5 +3,4 @@ export const emergencyBannerData = {
   description: 'Call our 24/7 emergency hotline',
   phoneNumber: '9775992022 / 9775992024',
   buttonText: 'Call Now',
-  
 }

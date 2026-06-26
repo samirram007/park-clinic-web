@@ -1,7 +1,7 @@
+import { resolve } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import tanstackRouter from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'node:path'
 import { defineConfig, loadEnv } from 'vite'
 import sitemap from 'vite-plugin-sitemap'
 
@@ -10,11 +10,10 @@ export default defineConfig(({ mode }) => {
   // const isProd = mode === 'production'
   const env = loadEnv(mode, process.cwd())
   return {
-
     // base: isProd ? '/frontend/' : '/',
     base: env.VITE_BASE_URL,
     server: {
-  // port: 3000,
+      // port: 3000,
       proxy: {
         '/api': {
           target: env.VITE_API_BASE_URL, // Your Laravel backend URL
@@ -22,8 +21,12 @@ export default defineConfig(({ mode }) => {
           secure: env.VITE_API_SECURE === 'true', // For local HTTP servers (set to true for HTTPS in production)
           rewrite: (path) => path.replace(/^\/api/, ''), // Optional: removes /api prefix if needed
         },
+        '/storage': {
+          target: env.VITE_API_BASE_URL, // Proxy storage files to Laravel backend
+          changeOrigin: true,
+          secure: env.VITE_API_SECURE === 'true',
+        },
       },
-
     },
     build: {
       // ssr: 'src/entry-server.tsx', // for server rendering
@@ -32,7 +35,6 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-
             // if (id.includes('src/features/accounts/settings')) {
             //   return 'accounts-settings'
             // }
@@ -88,7 +90,6 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
     },
- 
 
     resolve: {
       tsconfigPaths: true,
@@ -97,5 +98,4 @@ export default defineConfig(({ mode }) => {
       },
     },
   }
-}
-)
+})

@@ -1,8 +1,30 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Loader2,
+  Pencil,
+  Plus,
+  RefreshCw,
+  Save,
+  Search,
+  Trash2,
+  Upload,
+  UserRound,
+  X,
+} from 'lucide-react'
 import { adminDoctorService } from '../data/api'
+import { PaginationControls } from './PaginationControls'
 import type { Doctor, DoctorFormData } from '../data/doctor-schema'
 import { getDoctorImageUrl } from '@/features/doctors/services/api'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -15,35 +37,31 @@ import {
 } from '@/components/ui/select'
 import {
   AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { toast } from 'sonner'
 import {
-  Plus,
-  RefreshCw,
-  Search,
-  Pencil,
-  Trash2,
-  X,
-  Loader2,
-  UserRound,
-  Save,
-  Upload,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  ArrowUpDown,
-  ArrowUp,
-  ArrowDown,
-} from 'lucide-react'
-import { PaginationControls } from './PaginationControls'
-import { parseSchedule, combineSchedule } from '@/features/doctors/utils/schedule-utils'
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import {
+  combineSchedule,
+  parseSchedule,
+} from '@/features/doctors/utils/schedule-utils'
 
 /** Quick filter presets for common combinations. */
 const FILTER_PRESETS = [
@@ -66,12 +84,12 @@ const MAX_RECENT = 5
 type RecentEntry = {
   id: number
   name: string
-  type: string[]
+  type: Array<string>
   title: string | null
   image: string | null
 }
 
-function getRecent(): RecentEntry[] {
+function getRecent(): Array<RecentEntry> {
   try {
     return JSON.parse(localStorage.getItem(RECENT_KEY) ?? '[]')
   } catch {
@@ -79,7 +97,7 @@ function getRecent(): RecentEntry[] {
   }
 }
 
-function addRecent(doctor: Doctor): RecentEntry[] {
+function addRecent(doctor: Doctor): Array<RecentEntry> {
   const list = getRecent().filter((r) => r.id !== doctor.id)
   list.unshift({
     id: doctor.id,
@@ -110,7 +128,15 @@ function getUrlParam(key: string, fallback: string): string {
  * Persist filter state to the URL search params via replaceState.
  * Omits params with default/empty values for clean URLs.
  */
-function syncUrl(params: { page: number; per_page: number; type: string; status: string; q: string; sort_by: string; sort_order: string }) {
+function syncUrl(params: {
+  page: number
+  per_page: number
+  type: string
+  status: string
+  q: string
+  sort_by: string
+  sort_order: string
+}) {
   const sp = new URLSearchParams()
   if (params.page > 1) sp.set('page', String(params.page))
   if (params.per_page !== 10) sp.set('per_page', String(params.per_page))
@@ -120,7 +146,9 @@ function syncUrl(params: { page: number; per_page: number; type: string; status:
   if (params.sort_by !== 'name') sp.set('sort_by', params.sort_by)
   if (params.sort_order !== 'asc') sp.set('sort_order', params.sort_order)
   const qs = sp.toString()
-  const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname
+  const url = qs
+    ? `${window.location.pathname}?${qs}`
+    : window.location.pathname
   window.history.replaceState(null, '', url)
 }
 
@@ -179,14 +207,16 @@ const DoctorRow = ({
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <h3 className="font-semibold text-slate-900 truncate">{doctor.name}</h3>
+          <h3 className="font-semibold text-slate-900 truncate">
+            {doctor.name}
+          </h3>
           <div className="flex gap-1 flex-wrap">
             {doctor.type.length > 1 ? (
               <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-gradient-to-r from-blue-100 to-amber-100 text-slate-800 ring-1 ring-blue-200/50">
                 Consultant & Outdoor
               </span>
             ) : (
-              doctor.type.map(t => (
+              doctor.type.map((t) => (
                 <span
                   key={t}
                   className={`text-xs px-2 py-0.5 rounded-full font-medium ${
@@ -211,7 +241,9 @@ const DoctorRow = ({
         {/* Quick status toggle */}
         <button
           type="button"
-          onClick={() => onToggleStatus(doctor.id, doctor.is_active, doctor.name)}
+          onClick={() =>
+            onToggleStatus(doctor.id, doctor.is_active, doctor.name)
+          }
           disabled={isToggling}
           title={doctor.is_active ? 'Deactivate doctor' : 'Activate doctor'}
           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 shrink-0 ${
@@ -224,13 +256,26 @@ const DoctorRow = ({
             }`}
           />
         </button>
-        <span className={`text-xs font-medium w-14 ${doctor.is_active ? 'text-green-600' : 'text-slate-400'}`}>
+        <span
+          className={`text-xs font-medium w-14 ${doctor.is_active ? 'text-green-600' : 'text-slate-400'}`}
+        >
           {doctor.is_active ? 'Active' : 'Inact.'}
         </span>
-        <Button variant="ghost" size="icon" onClick={() => onEdit(doctor)} title="Edit">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onEdit(doctor)}
+          title="Edit"
+        >
           <Pencil size={16} />
         </Button>
-        <Button variant="ghost" size="icon" onClick={() => onDelete(doctor.id, doctor.name)} title="Delete" className="text-red-500 hover:text-red-700 hover:bg-red-50">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => onDelete(doctor.id, doctor.name)}
+          title="Delete"
+          className="text-red-500 hover:text-red-700 hover:bg-red-50"
+        >
           <Trash2 size={16} />
         </Button>
       </div>
@@ -263,9 +308,13 @@ export const DoctorManagement: React.FC = () => {
   // Filter state persisted in URL search params (survives refresh)
   const [page, setPage] = useState(() => parseInt(getUrlParam('page', '1'), 10))
   const [typeFilter, setTypeFilter] = useState(() => getUrlParam('type', 'all'))
-  const [statusFilter, setStatusFilter] = useState(() => getUrlParam('status', 'all'))
+  const [statusFilter, setStatusFilter] = useState(() =>
+    getUrlParam('status', 'all'),
+  )
   const [sortBy, setSortBy] = useState(() => getUrlParam('sort_by', 'name'))
-  const [sortOrder, setSortOrder] = useState(() => getUrlParam('sort_order', 'asc'))
+  const [sortOrder, setSortOrder] = useState(() =>
+    getUrlParam('sort_order', 'asc'),
+  )
   const [perPage, setPerPage] = useState(() => {
     const v = getUrlParam('per_page', '10')
     const n = parseInt(v, 10)
@@ -294,16 +343,32 @@ export const DoctorManagement: React.FC = () => {
       isFirstMountRef.current = false
       return
     }
-    syncUrl({ page, per_page: perPage, type: typeFilter, status: statusFilter, q: search, sort_by: sortBy, sort_order: sortOrder })
+    syncUrl({
+      page,
+      per_page: perPage,
+      type: typeFilter,
+      status: statusFilter,
+      q: search,
+      sort_by: sortBy,
+      sort_order: sortOrder,
+    })
   }, [page, perPage, typeFilter, statusFilter, search, sortBy, sortOrder])
   const [showForm, setShowForm] = useState(false)
   const [editingDoctor, setEditingDoctor] = useState<Doctor | null>(null)
   const [form, setForm] = useState<DoctorFormData>(emptyForm)
-  const [deactivateTarget, setDeactivateTarget] = useState<{ id: number; name: string } | null>(null)
-  const [deleteTarget, setDeleteTarget] = useState<{ id: number; name: string } | null>(null)
+  const [deactivateTarget, setDeactivateTarget] = useState<{
+    id: number
+    name: string
+  } | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<{
+    id: number
+    name: string
+  } | null>(null)
   const [pillsExpanded, setPillsExpanded] = useState(true)
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [recentList, setRecentList] = useState<RecentEntry[]>(() => getRecent())
+  const [recentList, setRecentList] = useState<Array<RecentEntry>>(() =>
+    getRecent(),
+  )
 
   // Show "Back to top" button when scrolled past 300px
   useEffect(() => {
@@ -350,36 +415,52 @@ export const DoctorManagement: React.FC = () => {
 
     // Show local preview
     const previewUrl = URL.createObjectURL(file)
-    setForm(prev => ({ ...prev, image: file, imagePreview: previewUrl }))
+    setForm((prev) => ({ ...prev, image: file, imagePreview: previewUrl }))
   }
 
   const handleRemoveImage = () => {
     if (form.imagePreview && form.imagePreview.startsWith('blob:')) {
       URL.revokeObjectURL(form.imagePreview)
     }
-    setForm(prev => ({ ...prev, image: '', imagePreview: '' }))
+    setForm((prev) => ({ ...prev, image: '', imagePreview: '' }))
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   const { data, isLoading } = useQuery({
-    queryKey: ['admin-doctors', page, perPage, typeFilter, statusFilter, search, sortBy, sortOrder],
+    queryKey: [
+      'admin-doctors',
+      page,
+      perPage,
+      typeFilter,
+      statusFilter,
+      search,
+      sortBy,
+      sortOrder,
+    ],
     queryFn: () =>
       adminDoctorService.getDoctors({
         page,
         per_page: perPage,
-        type: typeFilter === 'all' ? undefined : (typeFilter as 'consultant' | 'outdoor'),
-        status: statusFilter === 'all' ? undefined : (statusFilter as 'active' | 'inactive'),
+        type:
+          typeFilter === 'all'
+            ? undefined
+            : (typeFilter as 'consultant' | 'outdoor'),
+        status:
+          statusFilter === 'all'
+            ? undefined
+            : (statusFilter as 'active' | 'inactive'),
         search: search || undefined,
         sort_by: sortBy as 'name' | 'is_active',
         sort_order: sortOrder as 'asc' | 'desc',
       }),
-  });
+  })
 
-  const doctors: Doctor[] = data?.data ?? [];
-  const meta = data?.meta;
+  const doctors: Array<Doctor> = data?.data ?? []
+  const meta = data?.meta
 
   const createMutation = useMutation({
-    mutationFn: (payload: Record<string, unknown>) => adminDoctorService.createDoctor(payload),
+    mutationFn: (payload: Record<string, unknown>) =>
+      adminDoctorService.createDoctor(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-doctors'] })
       toast.success('Doctor created successfully')
@@ -392,8 +473,13 @@ export const DoctorManagement: React.FC = () => {
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, payload }: { id: number; payload: Record<string, unknown> }) =>
-      adminDoctorService.updateDoctor({ id, payload }),
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: number
+      payload: Record<string, unknown>
+    }) => adminDoctorService.updateDoctor({ id, payload }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-doctors'] })
       toast.success('Doctor updated successfully')
@@ -424,12 +510,17 @@ export const DoctorManagement: React.FC = () => {
     toggleStatusMutation.mutate(
       { id, is_active: newStatus },
       {
-        onSuccess: () => toast.success(`${name} is now ${newStatus ? 'active' : 'inactive'}`),
+        onSuccess: () =>
+          toast.success(`${name} is now ${newStatus ? 'active' : 'inactive'}`),
       },
     )
   }
 
-  const handleToggleStatus = (id: number, currentStatus: boolean, name: string) => {
+  const handleToggleStatus = (
+    id: number,
+    currentStatus: boolean,
+    name: string,
+  ) => {
     const newStatus = !currentStatus
     // Only show confirmation when deactivating
     if (!newStatus) {
@@ -480,7 +571,11 @@ export const DoctorManagement: React.FC = () => {
     // Merge schedule: dual-type uses separate fields, single-type uses the legacy textarea
     const isDualSchedule = form.type.length > 1
     const mergedSchedule = isDualSchedule
-      ? combineSchedule(form.consultantSchedule || '', form.outdoorSchedule || '', '')
+      ? combineSchedule(
+          form.consultantSchedule || '',
+          form.outdoorSchedule || '',
+          '',
+        )
       : form.schedule || null
 
     const payload: Record<string, unknown> = {
@@ -515,9 +610,13 @@ export const DoctorManagement: React.FC = () => {
   }
 
   const handleEditCb = useCallback((doctor: Doctor) => handleEdit(doctor), [])
-  const handleDeleteCb = useCallback((id: number, name: string) => handleDelete(id, name), [])
+  const handleDeleteCb = useCallback(
+    (id: number, name: string) => handleDelete(id, name),
+    [],
+  )
   const handleToggleCb = useCallback(
-    (id: number, currentStatus: boolean, name: string) => handleToggleStatus(id, currentStatus, name),
+    (id: number, currentStatus: boolean, name: string) =>
+      handleToggleStatus(id, currentStatus, name),
     [],
   )
 
@@ -527,8 +626,16 @@ export const DoctorManagement: React.FC = () => {
     <div className="p-6 md:p-8 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Manage Doctors</h1>
-        <Button onClick={() => { resetForm(); setShowForm(true) }} className="gap-2">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+          Manage Doctors
+        </h1>
+        <Button
+          onClick={() => {
+            resetForm()
+            setShowForm(true)
+          }}
+          className="gap-2"
+        >
           <Plus size={16} />
           Add Doctor
         </Button>
@@ -538,7 +645,13 @@ export const DoctorManagement: React.FC = () => {
       <div className="flex flex-wrap items-start justify-between gap-4 bg-white p-2 rounded-xl border border-slate-200 shadow-sm mb-6">
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-wrap items-center gap-2">
-            <Select value={typeFilter} onValueChange={(v) => { setTypeFilter(v); setPage(1) }}>
+            <Select
+              value={typeFilter}
+              onValueChange={(v) => {
+                setTypeFilter(v)
+                setPage(1)
+              }}
+            >
               <SelectTrigger className="w-36">
                 <SelectValue placeholder="All Types" />
               </SelectTrigger>
@@ -548,7 +661,13 @@ export const DoctorManagement: React.FC = () => {
                 <SelectItem value="outdoor">Outdoor</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setPage(1) }}>
+            <Select
+              value={statusFilter}
+              onValueChange={(v) => {
+                setStatusFilter(v)
+                setPage(1)
+              }}
+            >
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
@@ -592,13 +711,23 @@ export const DoctorManagement: React.FC = () => {
                 className="pl-9 h-9"
               />
             </div>
-            <Button variant="ghost" size="icon" onClick={() => queryClient.invalidateQueries({ queryKey: ['admin-doctors'] })} title="Refresh">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() =>
+                queryClient.invalidateQueries({ queryKey: ['admin-doctors'] })
+              }
+              title="Refresh"
+            >
               <RefreshCw size={16} />
             </Button>
             <div className="h-5 w-px bg-slate-200 mx-1" />
             <Select
               value={sortBy}
-              onValueChange={(v) => { setSortBy(v); setPage(1) }}
+              onValueChange={(v) => {
+                setSortBy(v)
+                setPage(1)
+              }}
             >
               <SelectTrigger className="w-28 h-9 text-xs">
                 <div className="flex items-center gap-1.5">
@@ -625,13 +754,18 @@ export const DoctorManagement: React.FC = () => {
               ) : (
                 <ArrowDown size={13} className="text-blue-600" />
               )}
-              <span className="text-slate-600">{sortOrder === 'asc' ? 'A-Z' : 'Z-A'}</span>
+              <span className="text-slate-600">
+                {sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
+              </span>
             </button>
           </div>
 
           {/* Active filter pills */}
           {(() => {
-            const activeFilterCount = (typeFilter !== 'all' ? 1 : 0) + (statusFilter !== 'all' ? 1 : 0) + (search ? 1 : 0)
+            const activeFilterCount =
+              (typeFilter !== 'all' ? 1 : 0) +
+              (statusFilter !== 'all' ? 1 : 0) +
+              (search ? 1 : 0)
             const showToggle = activeFilterCount >= 2
 
             /* Collapsed summary bar */
@@ -644,7 +778,8 @@ export const DoctorManagement: React.FC = () => {
                     </span>
                   )}
                   <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">
-                    {activeFilterCount} filter{activeFilterCount > 1 ? 's' : ''} active
+                    {activeFilterCount} filter{activeFilterCount > 1 ? 's' : ''}{' '}
+                    active
                   </span>
                   <button
                     type="button"
@@ -655,7 +790,13 @@ export const DoctorManagement: React.FC = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => { setTypeFilter('all'); setStatusFilter('all'); setSearchInput(''); setSearch(''); setPage(1) }}
+                    onClick={() => {
+                      setTypeFilter('all')
+                      setStatusFilter('all')
+                      setSearchInput('')
+                      setSearch('')
+                      setPage(1)
+                    }}
                     className="text-xs text-slate-400 hover:text-red-500 transition-colors underline underline-offset-2 ml-auto"
                   >
                     Clear all
@@ -674,10 +815,14 @@ export const DoctorManagement: React.FC = () => {
                 )}
                 {typeFilter !== 'all' && (
                   <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">
-                    Type: {typeFilter.charAt(0).toUpperCase() + typeFilter.slice(1)}
+                    Type:{' '}
+                    {typeFilter.charAt(0).toUpperCase() + typeFilter.slice(1)}
                     <button
                       type="button"
-                      onClick={() => { setTypeFilter('all'); setPage(1) }}
+                      onClick={() => {
+                        setTypeFilter('all')
+                        setPage(1)
+                      }}
                       className="hover:bg-blue-200 rounded-full p-0.5 transition-colors"
                       title="Clear type filter"
                     >
@@ -687,10 +832,15 @@ export const DoctorManagement: React.FC = () => {
                 )}
                 {statusFilter !== 'all' && (
                   <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700">
-                    Status: {statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)}
+                    Status:{' '}
+                    {statusFilter.charAt(0).toUpperCase() +
+                      statusFilter.slice(1)}
                     <button
                       type="button"
-                      onClick={() => { setStatusFilter('all'); setPage(1) }}
+                      onClick={() => {
+                        setStatusFilter('all')
+                        setPage(1)
+                      }}
                       className="hover:bg-emerald-200 rounded-full p-0.5 transition-colors"
                       title="Clear status filter"
                     >
@@ -703,7 +853,11 @@ export const DoctorManagement: React.FC = () => {
                     Search: &ldquo;{search}&rdquo;
                     <button
                       type="button"
-                      onClick={() => { setSearchInput(''); setSearch(''); setPage(1) }}
+                      onClick={() => {
+                        setSearchInput('')
+                        setSearch('')
+                        setPage(1)
+                      }}
                       className="hover:bg-purple-200 rounded-full p-0.5 transition-colors"
                       title="Clear search"
                     >
@@ -721,10 +875,18 @@ export const DoctorManagement: React.FC = () => {
                       <ChevronDown size={12} className="rotate-180" /> Hide
                     </button>
                   )}
-                  {(typeFilter !== 'all' || statusFilter !== 'all' || search) && (
+                  {(typeFilter !== 'all' ||
+                    statusFilter !== 'all' ||
+                    search) && (
                     <button
                       type="button"
-                      onClick={() => { setTypeFilter('all'); setStatusFilter('all'); setSearchInput(''); setSearch(''); setPage(1) }}
+                      onClick={() => {
+                        setTypeFilter('all')
+                        setStatusFilter('all')
+                        setSearchInput('')
+                        setSearch('')
+                        setPage(1)
+                      }}
                       className="text-xs text-slate-400 hover:text-red-500 transition-colors underline underline-offset-2"
                     >
                       Clear all
@@ -754,13 +916,22 @@ export const DoctorManagement: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Name */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Name *</label>
-                  <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required placeholder="Dr. John Doe" />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Name *
+                  </label>
+                  <Input
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    required
+                    placeholder="Dr. John Doe"
+                  />
                 </div>
 
                 {/* Type */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Type *</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Type *
+                  </label>
                   <div className="flex gap-4 h-9 items-center">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -768,9 +939,15 @@ export const DoctorManagement: React.FC = () => {
                         checked={form.type.includes('consultant')}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setForm({ ...form, type: [...form.type, 'consultant'] })
+                            setForm({
+                              ...form,
+                              type: [...form.type, 'consultant'],
+                            })
                           } else {
-                            setForm({ ...form, type: form.type.filter(t => t !== 'consultant') })
+                            setForm({
+                              ...form,
+                              type: form.type.filter((t) => t !== 'consultant'),
+                            })
                           }
                         }}
                         className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
@@ -783,9 +960,15 @@ export const DoctorManagement: React.FC = () => {
                         checked={form.type.includes('outdoor')}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setForm({ ...form, type: [...form.type, 'outdoor'] })
+                            setForm({
+                              ...form,
+                              type: [...form.type, 'outdoor'],
+                            })
                           } else {
-                            setForm({ ...form, type: form.type.filter(t => t !== 'outdoor') })
+                            setForm({
+                              ...form,
+                              type: form.type.filter((t) => t !== 'outdoor'),
+                            })
                           }
                         }}
                         className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
@@ -797,63 +980,131 @@ export const DoctorManagement: React.FC = () => {
 
                 {/* Title */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Title / Speciality</label>
-                  <Input value={form.title ?? ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="e.g. Cardiologist" />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Title / Speciality
+                  </label>
+                  <Input
+                    value={form.title ?? ''}
+                    onChange={(e) =>
+                      setForm({ ...form, title: e.target.value })
+                    }
+                    placeholder="e.g. Cardiologist"
+                  />
                 </div>
 
-                {/* Department */}
+                {/* Department — Combobox with existing departments + add new */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Department</label>
-                  <Input value={form.department ?? ''} onChange={(e) => setForm({ ...form, department: e.target.value })} placeholder="e.g. Cardiology" />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Department
+                  </label>
+                  <DepartmentCombobox
+                    value={form.department ?? ''}
+                    onChange={(value) =>
+                      setForm({ ...form, department: value })
+                    }
+                  />
                 </div>
 
                 {/* Experience */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Experience</label>
-                  <Input value={form.experience ?? ''} onChange={(e) => setForm({ ...form, experience: e.target.value })} placeholder="e.g. 10 years" />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Experience
+                  </label>
+                  <Input
+                    value={form.experience ?? ''}
+                    onChange={(e) =>
+                      setForm({ ...form, experience: e.target.value })
+                    }
+                    placeholder="e.g. 10 years"
+                  />
                 </div>
 
                 {/* Rating */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Rating (0-5)</label>
-                  <Input type="number" min={0} max={5} step={0.1} value={form.rating ?? ''} onChange={(e) => setForm({ ...form, rating: e.target.value ? parseFloat(e.target.value) : null })} />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Rating (0-5)
+                  </label>
+                  <Input
+                    type="number"
+                    min={0}
+                    max={5}
+                    step={0.1}
+                    value={form.rating ?? ''}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        rating: e.target.value
+                          ? parseFloat(e.target.value)
+                          : null,
+                      })
+                    }
+                  />
                 </div>
 
                 {/* Reviews */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Reviews Count</label>
-                  <Input type="number" min={0} value={form.reviews ?? ''} onChange={(e) => setForm({ ...form, reviews: e.target.value ? parseInt(e.target.value) : null })} />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Reviews Count
+                  </label>
+                  <Input
+                    type="number"
+                    min={0}
+                    value={form.reviews ?? ''}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        reviews: e.target.value
+                          ? parseInt(e.target.value)
+                          : null,
+                      })
+                    }
+                  />
                 </div>
 
                 {/* Active Status */}
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Status
+                  </label>
                   <div className="flex items-center gap-3 h-9">
                     <button
                       type="button"
-                      onClick={() => setForm(prev => ({ ...prev, is_active: !prev.is_active }))}
+                      onClick={() =>
+                        setForm((prev) => ({
+                          ...prev,
+                          is_active: !prev.is_active,
+                        }))
+                      }
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                         form.is_active ? 'bg-green-500' : 'bg-slate-300'
                       }`}
                     >
                       <span
                         className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition-transform duration-200 ${
-                          form.is_active ? 'translate-x-[22px]' : 'translate-x-[2px]'
+                          form.is_active
+                            ? 'translate-x-[22px]'
+                            : 'translate-x-[2px]'
                         }`}
                       />
                     </button>
-                    <span className={`text-sm font-medium ${form.is_active ? 'text-green-600' : 'text-slate-400'}`}>
+                    <span
+                      className={`text-sm font-medium ${form.is_active ? 'text-green-600' : 'text-slate-400'}`}
+                    >
                       {form.is_active ? 'Active' : 'Inactive'}
                     </span>
                     {!form.is_active && (
-                      <span className="text-xs text-amber-600">(Hidden from public site)</span>
+                      <span className="text-xs text-amber-600">
+                        (Hidden from public site)
+                      </span>
                     )}
                   </div>
                 </div>
 
                 {/* Image Upload */}
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Doctor Photo</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Doctor Photo
+                  </label>
                   <div className="flex items-start gap-4">
                     {/* Preview */}
                     <div className="w-24 h-24 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
@@ -880,7 +1131,13 @@ export const DoctorManagement: React.FC = () => {
                           {form.imagePreview ? 'Change Photo' : 'Upload Photo'}
                         </Button>
                         {form.imagePreview && (
-                          <Button type="button" variant="ghost" size="sm" onClick={handleRemoveImage} className="text-red-500 hover:text-red-700 hover:bg-red-50">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleRemoveImage}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          >
                             <X size={14} />
                             Remove
                           </Button>
@@ -903,8 +1160,17 @@ export const DoctorManagement: React.FC = () => {
 
               {/* Education */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Education</label>
-                <Textarea rows={3} value={form.education ?? ''} onChange={(e) => setForm({ ...form, education: e.target.value })} placeholder="MBBS, MD (Cardiology)&#10;DM, Fellowship in..." />
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Education
+                </label>
+                <Textarea
+                  rows={3}
+                  value={form.education ?? ''}
+                  onChange={(e) =>
+                    setForm({ ...form, education: e.target.value })
+                  }
+                  placeholder="MBBS, MD (Cardiology)&#10;DM, Fellowship in..."
+                />
               </div>
 
               {/* Schedule - separate fields for Consultant and Outdoor */}
@@ -915,34 +1181,74 @@ export const DoctorManagement: React.FC = () => {
                       <span className="w-2 h-2 rounded-full bg-blue-500" />
                       Consultant Schedule
                     </label>
-                    <Textarea rows={3} value={form.consultantSchedule ?? ''} onChange={(e) => setForm({ ...form, consultantSchedule: e.target.value })} placeholder="Monday - Friday: 9:00 AM - 1:00 PM&#10;Saturday: 9:00 AM - 12:00 PM" />
+                    <Textarea
+                      rows={3}
+                      value={form.consultantSchedule ?? ''}
+                      onChange={(e) =>
+                        setForm({ ...form, consultantSchedule: e.target.value })
+                      }
+                      placeholder="Monday - Friday: 9:00 AM - 1:00 PM&#10;Saturday: 9:00 AM - 12:00 PM"
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1 flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-amber-500" />
                       Outdoor Schedule
                     </label>
-                    <Textarea rows={3} value={form.outdoorSchedule ?? ''} onChange={(e) => setForm({ ...form, outdoorSchedule: e.target.value })} placeholder="Monday - Saturday: 10:00 AM - 4:00 PM&#10;Sunday: Emergency only" />
+                    <Textarea
+                      rows={3}
+                      value={form.outdoorSchedule ?? ''}
+                      onChange={(e) =>
+                        setForm({ ...form, outdoorSchedule: e.target.value })
+                      }
+                      placeholder="Monday - Saturday: 10:00 AM - 4:00 PM&#10;Sunday: Emergency only"
+                    />
                   </div>
                 </div>
               ) : (
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Schedule</label>
-                  <Textarea rows={3} value={form.schedule ?? ''} onChange={(e) => setForm({ ...form, schedule: e.target.value })} placeholder="Monday - Friday: 9:00 AM - 5:00 PM&#10;Saturday: 9:00 AM - 1:00 PM" />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Schedule
+                  </label>
+                  <Textarea
+                    rows={3}
+                    value={form.schedule ?? ''}
+                    onChange={(e) =>
+                      setForm({ ...form, schedule: e.target.value })
+                    }
+                    placeholder="Monday - Friday: 9:00 AM - 5:00 PM&#10;Saturday: 9:00 AM - 1:00 PM"
+                  />
                 </div>
               )}
 
               {/* Bio */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Bio / Description</label>
-                <Textarea rows={4} value={form.bio ?? ''} onChange={(e) => setForm({ ...form, bio: e.target.value })} placeholder="A brief professional biography..." />
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Bio / Description
+                </label>
+                <Textarea
+                  rows={4}
+                  value={form.bio ?? ''}
+                  onChange={(e) => setForm({ ...form, bio: e.target.value })}
+                  placeholder="A brief professional biography..."
+                />
               </div>
 
               {/* Actions */}
               <div className="flex items-center justify-end gap-3 pt-2">
-                <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
-                <Button type="submit" disabled={isPending || !form.name} className="gap-2">
-                  {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
+                <Button type="button" variant="outline" onClick={resetForm}>
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isPending || !form.name}
+                  className="gap-2"
+                >
+                  {isPending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Save size={16} />
+                  )}
                   {editingDoctor ? 'Update Doctor' : 'Create Doctor'}
                 </Button>
               </div>
@@ -954,14 +1260,18 @@ export const DoctorManagement: React.FC = () => {
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         open={!!deleteTarget}
-        onOpenChange={(open) => { if (!open) setDeleteTarget(null) }}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null)
+        }}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Doctor</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete <strong>{deleteTarget?.name}</strong>?
-              <br /><br />
+              Are you sure you want to delete{' '}
+              <strong>{deleteTarget?.name}</strong>?
+              <br />
+              <br />
               This action <strong>cannot</strong> be undone. All doctor data,
               including their profile photo and scheduling information, will be
               permanently removed.
@@ -989,14 +1299,18 @@ export const DoctorManagement: React.FC = () => {
       {/* Deactivation Confirmation Dialog */}
       <AlertDialog
         open={!!deactivateTarget}
-        onOpenChange={(open) => { if (!open) setDeactivateTarget(null) }}
+        onOpenChange={(open) => {
+          if (!open) setDeactivateTarget(null)
+        }}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Deactivate Doctor</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to deactivate <strong>{deactivateTarget?.name}</strong>?
-              <br /><br />
+              Are you sure you want to deactivate{' '}
+              <strong>{deactivateTarget?.name}</strong>?
+              <br />
+              <br />
               This will hide this doctor from the public website. Patients will
               no longer see them on the doctors list or detail pages.
             </AlertDialogDescription>
@@ -1008,7 +1322,11 @@ export const DoctorManagement: React.FC = () => {
             <AlertDialogAction
               onClick={() => {
                 if (deactivateTarget) {
-                  executeToggle(deactivateTarget.id, false, deactivateTarget.name)
+                  executeToggle(
+                    deactivateTarget.id,
+                    false,
+                    deactivateTarget.name,
+                  )
                 }
                 setDeactivateTarget(null)
               }}
@@ -1030,7 +1348,10 @@ export const DoctorManagement: React.FC = () => {
             </h2>
             <button
               type="button"
-              onClick={() => { clearRecent(); setRecentList([]) }}
+              onClick={() => {
+                clearRecent()
+                setRecentList([])
+              }}
               className="text-xs text-slate-400 hover:text-red-500 transition-colors"
             >
               Clear
@@ -1047,12 +1368,16 @@ export const DoctorManagement: React.FC = () => {
                   if (found) {
                     handleEdit(found)
                   } else {
-                    adminDoctorService.getDoctor(r.id)
+                    adminDoctorService
+                      .getDoctor(r.id)
                       .then((res) => handleEdit(res.data))
                       .catch(() => {
                         toast.error(`Could not load "${r.name}"`)
                         const updated = getRecent().filter((x) => x.id !== r.id)
-                        localStorage.setItem(RECENT_KEY, JSON.stringify(updated))
+                        localStorage.setItem(
+                          RECENT_KEY,
+                          JSON.stringify(updated),
+                        )
                         setRecentList(updated)
                       })
                   }
@@ -1061,7 +1386,11 @@ export const DoctorManagement: React.FC = () => {
               >
                 <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center shrink-0 overflow-hidden">
                   {r.image ? (
-                    <img src={getDoctorImageUrl(r.id)} alt="" className="w-full h-full object-cover" />
+                    <img
+                      src={getDoctorImageUrl(r.id)}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
                     <UserRound size={12} className="text-blue-600" />
                   )}
@@ -1095,15 +1424,15 @@ export const DoctorManagement: React.FC = () => {
         ) : (
           <div className="grid gap-3">
             {doctors.map((doctor: Doctor) => (
-                <DoctorRow
-                  key={doctor.id}
-                  doctor={doctor}
-                  onEdit={handleEditCb}
-                  onDelete={handleDeleteCb}
-                  onToggleStatus={handleToggleCb}
-                  isToggling={toggleStatusMutation.isPending}
-                />
-              ))}
+              <DoctorRow
+                key={doctor.id}
+                doctor={doctor}
+                onEdit={handleEditCb}
+                onDelete={handleDeleteCb}
+                onToggleStatus={handleToggleCb}
+                isToggling={toggleStatusMutation.isPending}
+              />
+            ))}
           </div>
         )}
       </div>
@@ -1114,7 +1443,16 @@ export const DoctorManagement: React.FC = () => {
           <p className="text-sm text-slate-500">
             Page {meta.current_page} of {meta.last_page} ({meta.total} total)
           </p>
-          <PaginationControls page={page} lastPage={meta.last_page} onPageChange={setPage} perPage={perPage} onPerPageChange={(v) => { setPerPage(v); setPage(1) }} />
+          <PaginationControls
+            page={page}
+            lastPage={meta.last_page}
+            onPageChange={setPage}
+            perPage={perPage}
+            onPerPageChange={(v) => {
+              setPerPage(v)
+              setPage(1)
+            }}
+          />
         </div>
       )}
 
@@ -1131,5 +1469,99 @@ export const DoctorManagement: React.FC = () => {
         </button>
       )}
     </div>
+  )
+}
+
+/** Combobox for selecting/creating a department. */
+const DepartmentCombobox = ({
+  value,
+  onChange,
+}: {
+  value: string
+  onChange: (value: string) => void
+}) => {
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
+
+  const { data: departments = [] } = useQuery({
+    queryKey: ['admin-departments'],
+    queryFn: () => adminDoctorService.getDepartments(),
+  })
+
+  // Filter departments by search
+  const filtered = departments.filter((d) =>
+    d.toLowerCase().includes(search.toLowerCase()),
+  )
+
+  const isNewValue =
+    search.trim().length > 0 &&
+    !departments.some((d) => d.toLowerCase() === search.toLowerCase())
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className={cn(
+            'w-full justify-between font-normal',
+            !value && 'text-muted-foreground',
+          )}
+        >
+          {value || 'Select or type a department...'}
+          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full min-w-[var(--radix-popover-trigger-width)] p-0">
+        <Command>
+          <CommandInput
+            placeholder="Search departments..."
+            value={search}
+            onValueChange={setSearch}
+          />
+          <CommandList>
+            <CommandEmpty>
+              {isNewValue ? (
+                <button
+                  type="button"
+                  className="w-full text-left px-2 py-3 text-sm text-blue-600 hover:bg-accent rounded-sm font-medium"
+                  onClick={() => {
+                    onChange(search.trim())
+                    setOpen(false)
+                    setSearch('')
+                  }}
+                >
+                  + Add &ldquo;{search.trim()}&rdquo;
+                </button>
+              ) : (
+                'No departments found.'
+              )}
+            </CommandEmpty>
+            <CommandGroup heading="Existing departments">
+              {filtered.map((dept) => (
+                <CommandItem
+                  key={dept}
+                  value={dept}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue)
+                    setOpen(false)
+                    setSearch('')
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === dept ? 'opacity-100' : 'opacity-0',
+                    )}
+                  />
+                  {dept}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   )
 }

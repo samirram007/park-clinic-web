@@ -114,11 +114,9 @@ export const featuredServicesData = {
 
       title: 'state of the art Healthcare Services at an affordable cost ',
 
-
-
       gradient: 'from-amber-50 to-white',
       border: 'border-amber-100',
       bg: 'bg-amber-50',
     },
   ],
-};
+}

@@ -4,7 +4,10 @@ import { aboutSectionData } from '@/data/home/about-section.data'
 
 export default function AboutSection() {
   const sectionRef = useRef(null)
-  const inView = useInView(sectionRef, { once: false, margin: '0px 0px -150px 0px' })
+  const inView = useInView(sectionRef, {
+    once: false,
+    margin: '0px 0px -150px 0px',
+  })
   const [activeImage, setActiveImage] = useState(0)
 
   const slideshowImages = [
@@ -31,26 +34,33 @@ export default function AboutSection() {
             animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-blue-600 font-light text-sm mb-4">{aboutSectionData.tag}</p>
+            <p className="text-blue-600 font-light text-sm mb-4">
+              {aboutSectionData.tag}
+            </p>
             <h2 className="text-3xl font-light text-gray-900 mb-6">
               {aboutSectionData.title}
             </h2>
-            
+
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">
               {aboutSectionData.story}
             </p>
             <div className="grid grid-cols-1 gap-4 mb-8">
               {aboutSectionData.features.map((feature, index) => (
                 <div key={index} className="flex gap-3">
-                  <div className="text-blue-600 font-light text-xl flex-shrink-0">✓</div>
+                  <div className="text-blue-600 font-light text-xl flex-shrink-0">
+                    ✓
+                  </div>
                   <div>
-                    <h4 className="font-light text-gray-900 mb-1">{feature.title}</h4>
-                    <p className="text-gray-600 text-sm">{feature.description}</p>
+                    <h4 className="font-light text-gray-900 mb-1">
+                      {feature.title}
+                    </h4>
+                    <p className="text-gray-600 text-sm">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
-            
           </motion.div>
           <motion.div
             className="relative"

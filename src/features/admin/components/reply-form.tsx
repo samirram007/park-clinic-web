@@ -1,9 +1,3 @@
-
-
 export default function ReplyForm() {
-  return (
-    <div>
-      ReplyForm
-    </div>
-  )
+  return <div>ReplyForm</div>
 }

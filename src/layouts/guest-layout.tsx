@@ -1,8 +1,8 @@
 import { useLayoutEffect, useState } from 'react'
+import { Outlet } from '@tanstack/react-router'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import ScrollToTop from '@/components/ScrollToTop'
-import { Outlet } from '@tanstack/react-router'
 
 export default function GuestLayout() {
   const [headerHeight, setHeaderHeight] = useState(128)

@@ -1,4 +1,3 @@
-import SEO from '@/components/SEO'
 import HeroSection from './sections/HeroSection'
 import InfoSection from './sections/InfoSection'
 import AboutSection from './sections/AboutSection'
@@ -9,6 +8,7 @@ import FeaturedServicesSection from './sections/FeaturedServicesSection'
 // import ExcellenceSection from './sections/ExcellenceSection'
 import AdditionalServicesSection from './sections/AdditionalServicesSection'
 import VisualTourSection from './sections/VisualTourSection'
+import SEO from '@/components/SEO'
 
 export default function Home() {
   return (
@@ -20,17 +20,17 @@ export default function Home() {
         ogType="website"
       />
       <main className="w-full overflow-x-hidden">
-      <HeroSection />
-      <InfoSection />
-      <AboutSection />
-      <DepartmentsSection />
-      <EmergencyBannerSection />
-      <FeaturedServicesSection />
-      {/* <DoctorsSection /> */}
-      {/* <ExcellenceSection /> */}
-      <VisualTourSection />
-      <AdditionalServicesSection />
-    </main>
+        <HeroSection />
+        <InfoSection />
+        <AboutSection />
+        <DepartmentsSection />
+        <EmergencyBannerSection />
+        <FeaturedServicesSection />
+        {/* <DoctorsSection /> */}
+        {/* <ExcellenceSection /> */}
+        <VisualTourSection />
+        <AdditionalServicesSection />
+      </main>
     </>
   )
 }

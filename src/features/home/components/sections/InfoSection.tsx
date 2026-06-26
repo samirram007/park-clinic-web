@@ -11,7 +11,9 @@ export default function InfoSection() {
             <div key={index}>
               <p className="text-blue-200 text-sm mb-2">{info.label}</p>
               <p className="text-2xl font-light">{info.value}</p>
-              {info.subLabel && <p className="text-blue-200 text-sm">{info.subLabel}</p>}
+              {info.subLabel && (
+                <p className="text-blue-200 text-sm">{info.subLabel}</p>
+              )}
             </div>
           ))}
         </div>

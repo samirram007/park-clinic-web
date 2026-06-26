@@ -9,7 +9,7 @@ export const infoSectionData = [
     label: 'Available',
     value: '24 Hrs. Admission Facilities',
     subLabel: '',
-      align: 'center',
+    align: 'center',
   },
   {
     label: 'Location',
@@ -17,6 +17,4 @@ export const infoSectionData = [
     subLabel: '',
     align: 'right',
   },
-
-  
 ]

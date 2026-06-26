@@ -1,10 +1,7 @@
-
-
 export const contactPageData = {
   header: {
     title: 'Contact',
-    description: ""
-
+    description: '',
   },
   contactInfo: {
     address: {
@@ -22,7 +19,8 @@ export const contactPageData = {
   },
   form: {
     title: 'Send us a Message',
-    description: 'Have questions or want to learn more? Reach out to us and our team will get back to you shortly.',
+    description:
+      'Have questions or want to learn more? Reach out to us and our team will get back to you shortly.',
     labels: {
       name: 'Name',
       email: 'Email',

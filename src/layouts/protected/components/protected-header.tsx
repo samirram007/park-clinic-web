@@ -17,10 +17,21 @@ export default function ProtectedHeader() {
         Admin Dashboard
       </Link>
       <nav className="flex items-center gap-3">
-        <Link to="/admin" className="text-sm hover:text-blue-600">Messages</Link>
-        <Link to="/admin/doctors" className="text-sm hover:text-blue-600">Doctors</Link>
-        <Link to="/admin/jobs" className="text-sm hover:text-blue-600">Jobs</Link>
-        <Link to="/admin/career-applications" className="text-sm hover:text-blue-600">Applications</Link>
+        <Link to="/admin" className="text-sm hover:text-blue-600">
+          Messages
+        </Link>
+        <Link to="/admin/doctors" className="text-sm hover:text-blue-600">
+          Doctors
+        </Link>
+        <Link to="/admin/jobs" className="text-sm hover:text-blue-600">
+          Jobs
+        </Link>
+        <Link
+          to="/admin/career-applications"
+          className="text-sm hover:text-blue-600"
+        >
+          Applications
+        </Link>
       </nav>
       <div className="flex items-center gap-4">
         <span className="text-sm font-medium">{user?.name}</span>

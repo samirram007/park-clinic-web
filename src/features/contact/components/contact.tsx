@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { Clock, Mail, MapPin, MessageSquare, Phone, PhoneCall, Send, } from 'lucide-react'
+import {
+  Clock,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  PhoneCall,
+  Send,
+} from 'lucide-react'
 import GoogleMap from './google-map'
 import { contactPageData as data } from '@/data/contact/contact.data'
 
@@ -19,7 +27,11 @@ export default function Contact() {
     setTimeout(() => setSubmitted(false), 3000)
   }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const onChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -31,14 +43,21 @@ export default function Contact() {
       {/* Hero Section */}
       <section className="bg-blue-700 text-white py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
             <path d="M0 100 C 20 0 50 0 100 100 Z" fill="currentColor" />
           </svg>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">{data.header.title} Us</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            {data.header.title} Us
+          </h1>
           <p className="text-blue-100 text-xl max-w-2xl mx-auto leading-relaxed">
-            We're here to provide the care and support you need. Reach out to us through any of the channels below.
+            We're here to provide the care and support you need. Reach out to us
+            through any of the channels below.
           </p>
         </div>
       </section>
@@ -51,27 +70,41 @@ export default function Contact() {
               <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-6">
                 <Phone size={28} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Emergency Contact</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Emergency Contact
+              </h3>
               <p className="text-blue-600 font-bold text-lg">+91 9775992022</p>
-              <p className="text-slate-500 mt-1">Available 24/7 for emergencies</p>
+              <p className="text-slate-500 mt-1">
+                Available 24/7 for emergencies
+              </p>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition">
               <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-6">
                 <Mail size={28} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Email Support</h3>
-              <p className="text-slate-600">{data.contactInfo.email.values[0]}</p>
-              <p className="text-slate-500 mt-1">We'll respond within 24 hours</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Email Support
+              </h3>
+              <p className="text-slate-600">
+                {data.contactInfo.email.values[0]}
+              </p>
+              <p className="text-slate-500 mt-1">
+                We'll respond within 24 hours
+              </p>
             </div>
 
             <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition">
               <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-6">
                 <Clock size={28} />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Working Hours</h3>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Working Hours
+              </h3>
               <p className="text-slate-600">365 Days / 24 Hours</p>
-              <p className="text-slate-500 mt-1">Admission facilities open always</p>
+              <p className="text-slate-500 mt-1">
+                Admission facilities open always
+              </p>
             </div>
           </div>
         </div>
@@ -81,28 +114,37 @@ export default function Contact() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-slate-100">
-
             {/* Contact Form */}
             <div className="lg:w-3/5 p-8 md:p-12 lg:p-16">
               <div className="flex items-center gap-3 mb-4">
-                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Contact Form</span>
+                <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">
+                  Contact Form
+                </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{data.form.title}</h2>
-              <p className="text-slate-500 text-lg mb-10">{data.form.description}</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                {data.form.title}
+              </h2>
+              <p className="text-slate-500 text-lg mb-10">
+                {data.form.description}
+              </p>
 
               {submitted && (
                 <div className="mb-8 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl flex items-center gap-3 animate-in fade-in zoom-in duration-300">
                   <div className="bg-green-500 text-white rounded-full p-1">
                     <Send size={16} />
                   </div>
-                  <span className="font-medium">{data.form.successMessage}</span>
+                  <span className="font-medium">
+                    {data.form.successMessage}
+                  </span>
                 </div>
               )}
 
               <form onSubmit={onSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700 ml-1">{data.form.labels.name}</label>
+                    <label className="text-sm font-bold text-slate-700 ml-1">
+                      {data.form.labels.name}
+                    </label>
                     <input
                       type="text"
                       name="name"
@@ -114,7 +156,9 @@ export default function Contact() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700 ml-1">{data.form.labels.email}</label>
+                    <label className="text-sm font-bold text-slate-700 ml-1">
+                      {data.form.labels.email}
+                    </label>
                     <input
                       type="email"
                       name="email"
@@ -128,7 +172,9 @@ export default function Contact() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700 ml-1">Subject</label>
+                  <label className="text-sm font-bold text-slate-700 ml-1">
+                    Subject
+                  </label>
                   <select
                     name="subject"
                     value={form.subject}
@@ -144,7 +190,9 @@ export default function Contact() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700 ml-1">{data.form.labels.message}</label>
+                  <label className="text-sm font-bold text-slate-700 ml-1">
+                    {data.form.labels.message}
+                  </label>
                   <textarea
                     name="message"
                     value={form.message}
@@ -161,7 +209,10 @@ export default function Contact() {
                   className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-500/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
                 >
                   {data.form.labels.submit}
-                  <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <Send
+                    size={18}
+                    className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                  />
                 </button>
               </form>
             </div>
@@ -178,8 +229,12 @@ export default function Contact() {
                       <MapPin size={20} />
                     </div>
                     <div>
-                      <p className="text-slate-400 text-sm font-medium uppercase tracking-wider">Address</p>
-                      <p className="text-lg mt-1">{data.contactInfo.address.value}</p>
+                      <p className="text-slate-400 text-sm font-medium uppercase tracking-wider">
+                        Address
+                      </p>
+                      <p className="text-lg mt-1">
+                        {data.contactInfo.address.value}
+                      </p>
                     </div>
                   </div>
 
@@ -188,9 +243,13 @@ export default function Contact() {
                       <PhoneCall size={20} />
                     </div>
                     <div>
-                      <p className="text-slate-400 text-sm font-medium uppercase tracking-wider">Contact</p>
+                      <p className="text-slate-400 text-sm font-medium uppercase tracking-wider">
+                        Contact
+                      </p>
                       <p className="text-lg mt-1">+91 9775992022</p>
-                      <p className="text-slate-300 text-sm">{data.contactInfo.email.values[0]}</p>
+                      <p className="text-slate-300 text-sm">
+                        {data.contactInfo.email.values[0]}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -204,9 +263,12 @@ export default function Contact() {
                 <div className="flex items-start gap-4">
                   <MessageSquare className="text-blue-500 mt-1" />
                   <div>
-                    <h4 className="font-bold text-white">Need immediate help?</h4>
+                    <h4 className="font-bold text-white">
+                      Need immediate help?
+                    </h4>
                     <p className="text-blue-100 text-sm mt-1 leading-relaxed">
-                      Our support team is standing by to assist with any urgent clinical or administrative questions.
+                      Our support team is standing by to assist with any urgent
+                      clinical or administrative questions.
                     </p>
                   </div>
                 </div>
@@ -220,7 +282,15 @@ export default function Contact() {
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 inline-block px-12">
-            <p className="text-slate-500">Want to book a direct appointment? <a href="/doctors" className="text-blue-600 font-bold hover:underline">Find a Doctor →</a></p>
+            <p className="text-slate-500">
+              Want to book a direct appointment?{' '}
+              <a
+                href="/doctors"
+                className="text-blue-600 font-bold hover:underline"
+              >
+                Find a Doctor →
+              </a>
+            </p>
           </div>
         </div>
       </section>

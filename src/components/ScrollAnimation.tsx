@@ -1,9 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import React from 'react'
+import { motion, useInView } from 'framer-motion'
+import React, { useRef } from 'react'
 
 interface ScrollAnimationProps {
   children: React.ReactNode

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ChevronUp } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false)

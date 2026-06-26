@@ -12,7 +12,9 @@ export const doctorSchema = z.object({
   schedule: z.string().nullable(),
   bio: z.string().nullable(),
   reviews: z.number().nullable(),
-  type: z.array(z.enum(['consultant', 'outdoor'])).min(1, 'At least one type is required'),
+  type: z
+    .array(z.enum(['consultant', 'outdoor']))
+    .min(1, 'At least one type is required'),
   is_active: z.boolean().default(true),
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),
@@ -25,7 +27,10 @@ export const doctorFormSchema = z.object({
   title: z.string().optional().default(''),
   department: z.string().optional().default(''),
   rating: z.coerce.number().min(0).max(5).optional().nullable(),
-  image: z.union([z.string(), z.instanceof(File)]).optional().default(''),
+  image: z
+    .union([z.string(), z.instanceof(File)])
+    .optional()
+    .default(''),
   imagePreview: z.string().optional().default(''),
   experience: z.string().optional().default(''),
   education: z.string().optional().default(''),
@@ -34,7 +39,9 @@ export const doctorFormSchema = z.object({
   outdoorSchedule: z.string().optional().default(''),
   bio: z.string().optional().default(''),
   reviews: z.coerce.number().min(0).optional().nullable(),
-  type: z.array(z.enum(['consultant', 'outdoor'])).min(1, 'At least one type is required'),
+  type: z
+    .array(z.enum(['consultant', 'outdoor']))
+    .min(1, 'At least one type is required'),
   is_active: z.boolean().optional().default(true),
 })
 

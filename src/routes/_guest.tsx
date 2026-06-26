@@ -1,9 +1,8 @@
- 
-import GuestLayout from '@/layouts/guest-layout'
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import GuestLayout from '@/layouts/guest-layout'
 
 export const Route = createFileRoute('/_guest')({
- beforeLoad: ({ context }) => {
+  beforeLoad: ({ context }) => {
     if (context.isAuthenticated) {
       throw redirect({ to: '/admin' })
     }
@@ -14,7 +13,7 @@ export const Route = createFileRoute('/_guest')({
 function RouteComponent() {
   return (
     <>
-   <GuestLayout />
+      <GuestLayout />
     </>
   )
 }

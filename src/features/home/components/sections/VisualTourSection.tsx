@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
-import { ImageIcon, ArrowRight } from 'lucide-react'
+import { ArrowRight, ImageIcon } from 'lucide-react'
 import OptimizedImage from '@/components/OptimizedImage'
 import { visualTourData as data } from '@/data/home/visual-tour-section.data'
 
@@ -17,12 +17,10 @@ export default function VisualTourSection() {
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
               {data.title}
             </h2>
-            <p className="text-slate-600 text-lg">
-              {data.description}
-            </p>
+            <p className="text-slate-600 text-lg">{data.description}</p>
           </div>
-          <Link 
-            to={data.cta.link as any}
+          <Link
+            to={data.cta.link}
             className="group inline-flex items-center gap-2 text-blue-600 font-bold text-lg hover:text-blue-700 transition"
           >
             {data.cta.text}
@@ -40,13 +38,15 @@ export default function VisualTourSection() {
               transition={{ delay: index * 0.1 }}
               className="relative group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm aspect-4/3"
             >
-              <OptimizedImage 
-                src={image.src} 
-                alt={image.title} 
+              <OptimizedImage
+                src={image.src}
+                alt={image.title}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-linear-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                <span className="text-blue-400 text-xs font-bold uppercase tracking-widest">{image.category}</span>
+                <span className="text-blue-400 text-xs font-bold uppercase tracking-widest">
+                  {image.category}
+                </span>
                 <h3 className="text-white font-bold mt-1">{image.title}</h3>
               </div>
             </motion.div>
@@ -54,21 +54,26 @@ export default function VisualTourSection() {
         </div>
 
         <div className="mt-16 bg-blue-600 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl shadow-blue-500/20">
-            <div className="absolute top-0 right-0 p-8 opacity-10">
-                <ImageIcon size={120} />
+          <div className="absolute top-0 right-0 p-8 opacity-10">
+            <ImageIcon size={120} />
+          </div>
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-center md:text-left">
+              <h3 className="text-3xl font-bold mb-2">
+                Want to see more of our hospital?
+              </h3>
+              <p className="text-blue-100 text-lg">
+                Experience our commitment to healthcare through our full visual
+                gallery.
+              </p>
             </div>
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="text-center md:text-left">
-                    <h3 className="text-3xl font-bold mb-2">Want to see more of our hospital?</h3>
-                    <p className="text-blue-100 text-lg">Experience our commitment to healthcare through our full visual gallery.</p>
-                </div>
-                <Link 
-                    to={data.cta.link as any}
-                    className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition shadow-lg shrink-0"
-                >
-                    Visit Full Gallery
-                </Link>
-            </div>
+            <Link
+              to={data.cta.link}
+              className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition shadow-lg shrink-0"
+            >
+              Visit Full Gallery
+            </Link>
+          </div>
         </div>
       </div>
     </section>

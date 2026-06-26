@@ -83,4 +83,6 @@ export const getCareerApplicationsParamsSchema = z.object({
   per_page: z.coerce.number().optional(),
   search: z.string().optional(),
 })
-export type GetCareerApplicationsParams = z.infer<typeof getCareerApplicationsParamsSchema>
+export type GetCareerApplicationsParams = z.infer<
+  typeof getCareerApplicationsParamsSchema
+>

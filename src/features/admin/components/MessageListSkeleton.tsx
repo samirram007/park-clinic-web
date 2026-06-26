@@ -1,5 +1,5 @@
-import React from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import React from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export const MessageListSkeleton: React.FC = () => {
   return (
@@ -18,5 +18,5 @@ export const MessageListSkeleton: React.FC = () => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}

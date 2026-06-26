@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Send, AlertCircle } from 'lucide-react'
-import { contactPageData as data } from '@/data/contact/contact.data'
+import { AlertCircle, Send } from 'lucide-react'
 import { useForm } from '@tanstack/react-form'
-import { contactSchema, type ContactFormData } from '../schema'
+import { contactSchema } from '../schema'
 import { useContactMutation } from '../hooks/use-contact-mutation'
+import { contactPageData as data } from '@/data/contact/contact.data'
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -22,9 +22,9 @@ export default function ContactForm() {
       email: '',
       subject: '',
       message: '',
-    } as ContactFormData,
+    },
     onSubmit: async ({ value }) => {
-        console.log(value)
+      console.log(value)
       mutation.mutate(value)
     },
   })
@@ -32,9 +32,13 @@ export default function ContactForm() {
   return (
     <div className="p-8 md:p-12 lg:p-16">
       <div className="flex items-center gap-3 mb-4">
-        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">Contact Form</span>
+        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold uppercase tracking-wider">
+          Contact Form
+        </span>
       </div>
-      <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{data.form.title}</h2>
+      <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+        {data.form.title}
+      </h2>
       <p className="text-slate-500 text-lg mb-10">{data.form.description}</p>
 
       {submitted && (
@@ -56,7 +60,9 @@ export default function ContactForm() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-bold text-slate-700 ml-1">{data.form.labels.name}</label>
+            <label className="text-sm font-bold text-slate-700 ml-1">
+              {data.form.labels.name}
+            </label>
             <form.Field
               name="name"
               validators={{
@@ -71,13 +77,16 @@ export default function ContactForm() {
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="Your Full Name"
                     className={`w-full px-5 py-4 bg-slate-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 ${
-                      field.state.meta.errors.length ? 'border-red-500' : 'border-slate-200 focus:border-blue-500'
+                      field.state.meta.errors.length
+                        ? 'border-red-500'
+                        : 'border-slate-200 focus:border-blue-500'
                     }`}
                     disabled={mutation.isPending}
                   />
                   {field.state.meta.errors.length > 0 && (
                     <p className="text-red-500 text-xs flex items-center gap-1 ml-1">
-                      <AlertCircle size={12} /> {String(field.state.meta.errors[0])}
+                      <AlertCircle size={12} />{' '}
+                      {String(field.state.meta.errors[0])}
                     </p>
                   )}
                 </div>
@@ -85,7 +94,9 @@ export default function ContactForm() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-bold text-slate-700 ml-1">{data.form.labels.email}</label>
+            <label className="text-sm font-bold text-slate-700 ml-1">
+              {data.form.labels.email}
+            </label>
             <form.Field
               name="email"
               validators={{
@@ -101,13 +112,16 @@ export default function ContactForm() {
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="your@email.com"
                     className={`w-full px-5 py-4 bg-slate-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 ${
-                      field.state.meta.errors.length ? 'border-red-500' : 'border-slate-200 focus:border-blue-500'
+                      field.state.meta.errors.length
+                        ? 'border-red-500'
+                        : 'border-slate-200 focus:border-blue-500'
                     }`}
                     disabled={mutation.isPending}
                   />
                   {field.state.meta.errors.length > 0 && (
                     <p className="text-red-500 text-xs flex items-center gap-1 ml-1">
-                      <AlertCircle size={12} /> {String(field.state.meta.errors[0])}
+                      <AlertCircle size={12} />{' '}
+                      {String(field.state.meta.errors[0])}
                     </p>
                   )}
                 </div>
@@ -117,7 +131,9 @@ export default function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-bold text-slate-700 ml-1">Subject</label>
+          <label className="text-sm font-bold text-slate-700 ml-1">
+            Subject
+          </label>
           <form.Field
             name="subject"
             validators={{
@@ -131,7 +147,9 @@ export default function ContactForm() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={`w-full px-5 py-4 bg-slate-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-700 ${
-                    field.state.meta.errors.length ? 'border-red-500' : 'border-slate-200 focus:border-blue-500'
+                    field.state.meta.errors.length
+                      ? 'border-red-500'
+                      : 'border-slate-200 focus:border-blue-500'
                   }`}
                   disabled={mutation.isPending}
                 >
@@ -143,7 +161,8 @@ export default function ContactForm() {
                 </select>
                 {field.state.meta.errors.length > 0 && (
                   <p className="text-red-500 text-xs flex items-center gap-1 ml-1">
-                    <AlertCircle size={12} /> {String(field.state.meta.errors[0])}
+                    <AlertCircle size={12} />{' '}
+                    {String(field.state.meta.errors[0])}
                   </p>
                 )}
               </div>
@@ -152,7 +171,9 @@ export default function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-bold text-slate-700 ml-1">{data.form.labels.message}</label>
+          <label className="text-sm font-bold text-slate-700 ml-1">
+            {data.form.labels.message}
+          </label>
           <form.Field
             name="message"
             validators={{
@@ -168,13 +189,16 @@ export default function ContactForm() {
                   rows={5}
                   placeholder="How can we help you?"
                   className={`w-full px-5 py-4 bg-slate-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all resize-none placeholder:text-slate-400 ${
-                    field.state.meta.errors.length ? 'border-red-500' : 'border-slate-200 focus:border-blue-500'
+                    field.state.meta.errors.length
+                      ? 'border-red-500'
+                      : 'border-slate-200 focus:border-blue-500'
                   }`}
                   disabled={mutation.isPending}
                 />
                 {field.state.meta.errors.length > 0 && (
                   <p className="text-red-500 text-xs flex items-center gap-1 ml-1">
-                    <AlertCircle size={12} /> {String(field.state.meta.errors[0])}
+                    <AlertCircle size={12} />{' '}
+                    {String(field.state.meta.errors[0])}
                   </p>
                 )}
               </div>
@@ -192,7 +216,10 @@ export default function ContactForm() {
             >
               {mutation.isPending ? 'Sending...' : data.form.labels.submit}
               {!mutation.isPending && (
-                <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <Send
+                  size={18}
+                  className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                />
               )}
             </button>
           )}

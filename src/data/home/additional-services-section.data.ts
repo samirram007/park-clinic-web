@@ -5,13 +5,13 @@ export const additionalServicesData = [
     description: `
 ✦ Park Sonoscan Clinic Recently Introducing Comprehensive Haematology Daycare Chemotherapy Unit
  `,
-description1: `
+    description1: `
 ✦ Specialized Treatment for Different Blood Disorders: Anaemia, Lymphoma, Myeloma, Leukaemia, Thalassaemia, Hemophilia etc.
  `,
- description2: `
+    description2: `
 ✦ Run by Experienced and Qualified Haematologists at an Affordable Price
 `,
-description3: `
+    description3: `
 ✦ This Unit is Under the Care of the Most Experienced & Respected Haematologists of Eastern India:
 Dr. Maitreyi Bhattacharyya, MD, DM &
 Dr. Sharmila Chandra, MD

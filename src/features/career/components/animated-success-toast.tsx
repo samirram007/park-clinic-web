@@ -29,7 +29,10 @@ const contentVariants = {
   },
 }
 
-export const AnimatedSuccessToast = ({ title, description }: AnimatedSuccessToastProps) => (
+export const AnimatedSuccessToast = ({
+  title,
+  description,
+}: AnimatedSuccessToastProps) => (
   <div className="flex items-start gap-3">
     <motion.div
       initial="hidden"
@@ -46,7 +49,9 @@ export const AnimatedSuccessToast = ({ title, description }: AnimatedSuccessToas
       className="min-w-0"
     >
       <p className="font-semibold text-slate-900 text-sm">{title}</p>
-      {description && <p className="text-xs text-slate-500 mt-0.5">{description}</p>}
+      {description && (
+        <p className="text-xs text-slate-500 mt-0.5">{description}</p>
+      )}
     </motion.div>
   </div>
 )

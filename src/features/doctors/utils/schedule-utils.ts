@@ -5,11 +5,15 @@
  * lines starting with "Outdoor:" go into the outdoor part, and all other lines
  * go into the general part. The prefix is stripped from consultant/outdoor lines.
  */
-export function parseSchedule(schedule: string): { consultant: string; outdoor: string; general: string } {
+export function parseSchedule(schedule: string): {
+  consultant: string
+  outdoor: string
+  general: string
+} {
   const lines = schedule.split('\n')
-  const consultant: string[] = []
-  const outdoor: string[] = []
-  const general: string[] = []
+  const consultant: Array<string> = []
+  const outdoor: Array<string> = []
+  const general: Array<string> = []
   for (const line of lines) {
     const trimmed = line.trim()
     if (!trimmed) continue
@@ -32,8 +36,12 @@ export function parseSchedule(schedule: string): { consultant: string; outdoor: 
  * Combine consultant, outdoor, and general schedule parts into a single schedule string.
  * Consultant lines get the "Consultant: " prefix, outdoor lines get the "Outdoor: " prefix.
  */
-export function combineSchedule(consultant: string, outdoor: string, general: string): string {
-  const parts: string[] = []
+export function combineSchedule(
+  consultant: string,
+  outdoor: string,
+  general: string,
+): string {
+  const parts: Array<string> = []
   if (consultant.trim()) parts.push('Consultant: ' + consultant.trim())
   if (outdoor.trim()) parts.push('Outdoor: ' + outdoor.trim())
   if (general.trim()) parts.push(general.trim())
