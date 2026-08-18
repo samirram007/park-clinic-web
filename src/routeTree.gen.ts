@@ -9,35 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as GuestRouteImport } from './routes/_guest'
+import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as GuestIndexRouteImport } from './routes/_guest/index'
-import { Route as GuestTermsOfServiceRouteImport } from './routes/_guest/terms-of-service'
-import { Route as GuestSitemapRouteImport } from './routes/_guest/sitemap'
-import { Route as GuestPrivacyPolicyRouteImport } from './routes/_guest/privacy-policy'
-import { Route as GuestPharmacyRouteImport } from './routes/_guest/pharmacy'
-import { Route as GuestLoginRouteImport } from './routes/_guest/login'
-import { Route as GuestGalleryRouteImport } from './routes/_guest/gallery'
-import { Route as GuestFrontendRouteImport } from './routes/_guest/frontend'
-import { Route as GuestDoctorsRouteImport } from './routes/_guest/doctors'
-import { Route as GuestDepartmentsRouteImport } from './routes/_guest/departments'
-import { Route as GuestContactRouteImport } from './routes/_guest/contact'
-import { Route as GuestCareerRouteImport } from './routes/_guest/career'
 import { Route as GuestAboutRouteImport } from './routes/_guest/about'
-import { Route as ProtectedAdminIndexRouteImport } from './routes/_protected/admin/index'
-import { Route as ProtectedAdminJobsRouteImport } from './routes/_protected/admin/jobs'
-import { Route as ProtectedAdminDoctorsRouteImport } from './routes/_protected/admin/doctors'
-import { Route as ProtectedAdminContactsRouteImport } from './routes/_protected/admin/contacts'
-import { Route as ProtectedAdminCareerApplicationsRouteImport } from './routes/_protected/admin/career-applications'
-import { Route as GuestServicesServiceRouteImport } from './routes/_guest/services/$service'
+import { Route as GuestCareerRouteImport } from './routes/_guest/career'
+import { Route as GuestContactRouteImport } from './routes/_guest/contact'
+import { Route as GuestDepartmentsRouteImport } from './routes/_guest/departments'
+import { Route as GuestDoctorsRouteImport } from './routes/_guest/doctors'
+import { Route as GuestFrontendRouteImport } from './routes/_guest/frontend'
+import { Route as GuestGalleryRouteImport } from './routes/_guest/gallery'
+import { Route as GuestLoginRouteImport } from './routes/_guest/login'
+import { Route as GuestPharmacyRouteImport } from './routes/_guest/pharmacy'
+import { Route as GuestPrivacyPolicyRouteImport } from './routes/_guest/privacy-policy'
+import { Route as GuestSitemapRouteImport } from './routes/_guest/sitemap'
+import { Route as GuestTermsOfServiceRouteImport } from './routes/_guest/terms-of-service'
 import { Route as GuestDoctorsDoctorIdRouteImport } from './routes/_guest/doctors.$doctorId'
+import { Route as GuestServicesServiceRouteImport } from './routes/_guest/services/$service'
+import { Route as ProtectedAdminIndexRouteImport } from './routes/_protected/admin/index'
+import { Route as ProtectedAdminCareerApplicationsRouteImport } from './routes/_protected/admin/career-applications'
+import { Route as ProtectedAdminContactsRouteImport } from './routes/_protected/admin/contacts'
+import { Route as ProtectedAdminDoctorsRouteImport } from './routes/_protected/admin/doctors'
+import { Route as ProtectedAdminJobsRouteImport } from './routes/_protected/admin/jobs'
+import { Route as ProtectedAdminSettingsRouteImport } from './routes/_protected/admin/settings'
 
-const ProtectedRoute = ProtectedRouteImport.update({
-  id: '/_protected',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GuestRoute = GuestRouteImport.update({
   id: '/_guest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuestIndexRoute = GuestIndexRouteImport.update({
@@ -45,54 +46,9 @@ const GuestIndexRoute = GuestIndexRouteImport.update({
   path: '/',
   getParentRoute: () => GuestRoute,
 } as any)
-const GuestTermsOfServiceRoute = GuestTermsOfServiceRouteImport.update({
-  id: '/terms-of-service',
-  path: '/terms-of-service',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestSitemapRoute = GuestSitemapRouteImport.update({
-  id: '/sitemap',
-  path: '/sitemap',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestPrivacyPolicyRoute = GuestPrivacyPolicyRouteImport.update({
-  id: '/privacy-policy',
-  path: '/privacy-policy',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestPharmacyRoute = GuestPharmacyRouteImport.update({
-  id: '/pharmacy',
-  path: '/pharmacy',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestLoginRoute = GuestLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestGalleryRoute = GuestGalleryRouteImport.update({
-  id: '/gallery',
-  path: '/gallery',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestFrontendRoute = GuestFrontendRouteImport.update({
-  id: '/frontend',
-  path: '/frontend',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestDoctorsRoute = GuestDoctorsRouteImport.update({
-  id: '/doctors',
-  path: '/doctors',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestDepartmentsRoute = GuestDepartmentsRouteImport.update({
-  id: '/departments',
-  path: '/departments',
-  getParentRoute: () => GuestRoute,
-} as any)
-const GuestContactRoute = GuestContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const GuestAboutRoute = GuestAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => GuestRoute,
 } as any)
 const GuestCareerRoute = GuestCareerRouteImport.update({
@@ -100,29 +56,69 @@ const GuestCareerRoute = GuestCareerRouteImport.update({
   path: '/career',
   getParentRoute: () => GuestRoute,
 } as any)
-const GuestAboutRoute = GuestAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const GuestContactRoute = GuestContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestDepartmentsRoute = GuestDepartmentsRouteImport.update({
+  id: '/departments',
+  path: '/departments',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestDoctorsRoute = GuestDoctorsRouteImport.update({
+  id: '/doctors',
+  path: '/doctors',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestFrontendRoute = GuestFrontendRouteImport.update({
+  id: '/frontend',
+  path: '/frontend',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestGalleryRoute = GuestGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestLoginRoute = GuestLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestPharmacyRoute = GuestPharmacyRouteImport.update({
+  id: '/pharmacy',
+  path: '/pharmacy',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestPrivacyPolicyRoute = GuestPrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestSitemapRoute = GuestSitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestTermsOfServiceRoute = GuestTermsOfServiceRouteImport.update({
+  id: '/terms-of-service',
+  path: '/terms-of-service',
+  getParentRoute: () => GuestRoute,
+} as any)
+const GuestDoctorsDoctorIdRoute = GuestDoctorsDoctorIdRouteImport.update({
+  id: '/$doctorId',
+  path: '/$doctorId',
+  getParentRoute: () => GuestDoctorsRoute,
+} as any)
+const GuestServicesServiceRoute = GuestServicesServiceRouteImport.update({
+  id: '/services/$service',
+  path: '/services/$service',
   getParentRoute: () => GuestRoute,
 } as any)
 const ProtectedAdminIndexRoute = ProtectedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-const ProtectedAdminJobsRoute = ProtectedAdminJobsRouteImport.update({
-  id: '/admin/jobs',
-  path: '/admin/jobs',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-const ProtectedAdminDoctorsRoute = ProtectedAdminDoctorsRouteImport.update({
-  id: '/admin/doctors',
-  path: '/admin/doctors',
-  getParentRoute: () => ProtectedRoute,
-} as any)
-const ProtectedAdminContactsRoute = ProtectedAdminContactsRouteImport.update({
-  id: '/admin/contacts',
-  path: '/admin/contacts',
   getParentRoute: () => ProtectedRoute,
 } as any)
 const ProtectedAdminCareerApplicationsRoute =
@@ -131,15 +127,25 @@ const ProtectedAdminCareerApplicationsRoute =
     path: '/admin/career-applications',
     getParentRoute: () => ProtectedRoute,
   } as any)
-const GuestServicesServiceRoute = GuestServicesServiceRouteImport.update({
-  id: '/services/$service',
-  path: '/services/$service',
-  getParentRoute: () => GuestRoute,
+const ProtectedAdminContactsRoute = ProtectedAdminContactsRouteImport.update({
+  id: '/admin/contacts',
+  path: '/admin/contacts',
+  getParentRoute: () => ProtectedRoute,
 } as any)
-const GuestDoctorsDoctorIdRoute = GuestDoctorsDoctorIdRouteImport.update({
-  id: '/$doctorId',
-  path: '/$doctorId',
-  getParentRoute: () => GuestDoctorsRoute,
+const ProtectedAdminDoctorsRoute = ProtectedAdminDoctorsRouteImport.update({
+  id: '/admin/doctors',
+  path: '/admin/doctors',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedAdminJobsRoute = ProtectedAdminJobsRouteImport.update({
+  id: '/admin/jobs',
+  path: '/admin/jobs',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedAdminSettingsRoute = ProtectedAdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => ProtectedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -162,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/admin/contacts': typeof ProtectedAdminContactsRoute
   '/admin/doctors': typeof ProtectedAdminDoctorsRoute
   '/admin/jobs': typeof ProtectedAdminJobsRoute
+  '/admin/settings': typeof ProtectedAdminSettingsRoute
   '/admin/': typeof ProtectedAdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/admin/contacts': typeof ProtectedAdminContactsRoute
   '/admin/doctors': typeof ProtectedAdminDoctorsRoute
   '/admin/jobs': typeof ProtectedAdminJobsRoute
+  '/admin/settings': typeof ProtectedAdminSettingsRoute
   '/admin': typeof ProtectedAdminIndexRoute
 }
 export interface FileRoutesById {
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/_protected/admin/contacts': typeof ProtectedAdminContactsRoute
   '/_protected/admin/doctors': typeof ProtectedAdminDoctorsRoute
   '/_protected/admin/jobs': typeof ProtectedAdminJobsRoute
+  '/_protected/admin/settings': typeof ProtectedAdminSettingsRoute
   '/_protected/admin/': typeof ProtectedAdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/admin/contacts'
     | '/admin/doctors'
     | '/admin/jobs'
+    | '/admin/settings'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/admin/contacts'
     | '/admin/doctors'
     | '/admin/jobs'
+    | '/admin/settings'
     | '/admin'
   id:
     | '__root__'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/_protected/admin/contacts'
     | '/_protected/admin/doctors'
     | '/_protected/admin/jobs'
+    | '/_protected/admin/settings'
     | '/_protected/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -289,18 +301,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_protected': {
-      id: '/_protected'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof ProtectedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_guest': {
       id: '/_guest'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof GuestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_guest/': {
@@ -310,74 +322,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestIndexRouteImport
       parentRoute: typeof GuestRoute
     }
-    '/_guest/terms-of-service': {
-      id: '/_guest/terms-of-service'
-      path: '/terms-of-service'
-      fullPath: '/terms-of-service'
-      preLoaderRoute: typeof GuestTermsOfServiceRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/sitemap': {
-      id: '/_guest/sitemap'
-      path: '/sitemap'
-      fullPath: '/sitemap'
-      preLoaderRoute: typeof GuestSitemapRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/privacy-policy': {
-      id: '/_guest/privacy-policy'
-      path: '/privacy-policy'
-      fullPath: '/privacy-policy'
-      preLoaderRoute: typeof GuestPrivacyPolicyRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/pharmacy': {
-      id: '/_guest/pharmacy'
-      path: '/pharmacy'
-      fullPath: '/pharmacy'
-      preLoaderRoute: typeof GuestPharmacyRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/login': {
-      id: '/_guest/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof GuestLoginRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/gallery': {
-      id: '/_guest/gallery'
-      path: '/gallery'
-      fullPath: '/gallery'
-      preLoaderRoute: typeof GuestGalleryRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/frontend': {
-      id: '/_guest/frontend'
-      path: '/frontend'
-      fullPath: '/frontend'
-      preLoaderRoute: typeof GuestFrontendRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/doctors': {
-      id: '/_guest/doctors'
-      path: '/doctors'
-      fullPath: '/doctors'
-      preLoaderRoute: typeof GuestDoctorsRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/departments': {
-      id: '/_guest/departments'
-      path: '/departments'
-      fullPath: '/departments'
-      preLoaderRoute: typeof GuestDepartmentsRouteImport
-      parentRoute: typeof GuestRoute
-    }
-    '/_guest/contact': {
-      id: '/_guest/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof GuestContactRouteImport
+    '/_guest/about': {
+      id: '/_guest/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof GuestAboutRouteImport
       parentRoute: typeof GuestRoute
     }
     '/_guest/career': {
@@ -387,11 +336,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestCareerRouteImport
       parentRoute: typeof GuestRoute
     }
-    '/_guest/about': {
-      id: '/_guest/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof GuestAboutRouteImport
+    '/_guest/contact': {
+      id: '/_guest/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof GuestContactRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/departments': {
+      id: '/_guest/departments'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof GuestDepartmentsRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/doctors': {
+      id: '/_guest/doctors'
+      path: '/doctors'
+      fullPath: '/doctors'
+      preLoaderRoute: typeof GuestDoctorsRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/frontend': {
+      id: '/_guest/frontend'
+      path: '/frontend'
+      fullPath: '/frontend'
+      preLoaderRoute: typeof GuestFrontendRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/gallery': {
+      id: '/_guest/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GuestGalleryRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/login': {
+      id: '/_guest/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof GuestLoginRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/pharmacy': {
+      id: '/_guest/pharmacy'
+      path: '/pharmacy'
+      fullPath: '/pharmacy'
+      preLoaderRoute: typeof GuestPharmacyRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/privacy-policy': {
+      id: '/_guest/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof GuestPrivacyPolicyRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/sitemap': {
+      id: '/_guest/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof GuestSitemapRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/terms-of-service': {
+      id: '/_guest/terms-of-service'
+      path: '/terms-of-service'
+      fullPath: '/terms-of-service'
+      preLoaderRoute: typeof GuestTermsOfServiceRouteImport
+      parentRoute: typeof GuestRoute
+    }
+    '/_guest/doctors/$doctorId': {
+      id: '/_guest/doctors/$doctorId'
+      path: '/$doctorId'
+      fullPath: '/doctors/$doctorId'
+      preLoaderRoute: typeof GuestDoctorsDoctorIdRouteImport
+      parentRoute: typeof GuestDoctorsRoute
+    }
+    '/_guest/services/$service': {
+      id: '/_guest/services/$service'
+      path: '/services/$service'
+      fullPath: '/services/$service'
+      preLoaderRoute: typeof GuestServicesServiceRouteImport
       parentRoute: typeof GuestRoute
     }
     '/_protected/admin/': {
@@ -401,18 +427,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminIndexRouteImport
       parentRoute: typeof ProtectedRoute
     }
-    '/_protected/admin/jobs': {
-      id: '/_protected/admin/jobs'
-      path: '/admin/jobs'
-      fullPath: '/admin/jobs'
-      preLoaderRoute: typeof ProtectedAdminJobsRouteImport
-      parentRoute: typeof ProtectedRoute
-    }
-    '/_protected/admin/doctors': {
-      id: '/_protected/admin/doctors'
-      path: '/admin/doctors'
-      fullPath: '/admin/doctors'
-      preLoaderRoute: typeof ProtectedAdminDoctorsRouteImport
+    '/_protected/admin/career-applications': {
+      id: '/_protected/admin/career-applications'
+      path: '/admin/career-applications'
+      fullPath: '/admin/career-applications'
+      preLoaderRoute: typeof ProtectedAdminCareerApplicationsRouteImport
       parentRoute: typeof ProtectedRoute
     }
     '/_protected/admin/contacts': {
@@ -422,26 +441,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminContactsRouteImport
       parentRoute: typeof ProtectedRoute
     }
-    '/_protected/admin/career-applications': {
-      id: '/_protected/admin/career-applications'
-      path: '/admin/career-applications'
-      fullPath: '/admin/career-applications'
-      preLoaderRoute: typeof ProtectedAdminCareerApplicationsRouteImport
+    '/_protected/admin/doctors': {
+      id: '/_protected/admin/doctors'
+      path: '/admin/doctors'
+      fullPath: '/admin/doctors'
+      preLoaderRoute: typeof ProtectedAdminDoctorsRouteImport
       parentRoute: typeof ProtectedRoute
     }
-    '/_guest/services/$service': {
-      id: '/_guest/services/$service'
-      path: '/services/$service'
-      fullPath: '/services/$service'
-      preLoaderRoute: typeof GuestServicesServiceRouteImport
-      parentRoute: typeof GuestRoute
+    '/_protected/admin/jobs': {
+      id: '/_protected/admin/jobs'
+      path: '/admin/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof ProtectedAdminJobsRouteImport
+      parentRoute: typeof ProtectedRoute
     }
-    '/_guest/doctors/$doctorId': {
-      id: '/_guest/doctors/$doctorId'
-      path: '/$doctorId'
-      fullPath: '/doctors/$doctorId'
-      preLoaderRoute: typeof GuestDoctorsDoctorIdRouteImport
-      parentRoute: typeof GuestDoctorsRoute
+    '/_protected/admin/settings': {
+      id: '/_protected/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof ProtectedAdminSettingsRouteImport
+      parentRoute: typeof ProtectedRoute
     }
   }
 }
@@ -499,6 +518,7 @@ interface ProtectedRouteChildren {
   ProtectedAdminContactsRoute: typeof ProtectedAdminContactsRoute
   ProtectedAdminDoctorsRoute: typeof ProtectedAdminDoctorsRoute
   ProtectedAdminJobsRoute: typeof ProtectedAdminJobsRoute
+  ProtectedAdminSettingsRoute: typeof ProtectedAdminSettingsRoute
   ProtectedAdminIndexRoute: typeof ProtectedAdminIndexRoute
 }
 
@@ -507,6 +527,7 @@ const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedAdminContactsRoute: ProtectedAdminContactsRoute,
   ProtectedAdminDoctorsRoute: ProtectedAdminDoctorsRoute,
   ProtectedAdminJobsRoute: ProtectedAdminJobsRoute,
+  ProtectedAdminSettingsRoute: ProtectedAdminSettingsRoute,
   ProtectedAdminIndexRoute: ProtectedAdminIndexRoute,
 }
 

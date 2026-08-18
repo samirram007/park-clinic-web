@@ -420,17 +420,7 @@ export default function Header() {
                   Pharmacy
                 </Link>
 
-                <Link
-                  to="/departments"
-                  className={`px-4 py-3 text-lg border-b border-gray-50 rounded-lg ${
-                    location.pathname === '/departments'
-                      ? 'bg-blue-50 text-blue-700 font-bold'
-                      : 'text-gray-800'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  Departments
-                </Link>
+
                 <Link
                   to="/doctors"
                   className={`px-4 py-3 text-lg border-b border-gray-50 rounded-lg ${

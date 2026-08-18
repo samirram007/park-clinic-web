@@ -165,3 +165,14 @@ export const adminCareerApplicationService = {
     return data
   },
 }
+
+export const settingsService = {
+  getChatWidgetStatus: async (): Promise<{ enabled: boolean }> => {
+    const { data } = await apiClient.get('/settings/chat-widget')
+    return data
+  },
+  updateChatWidget: async (enabled: boolean): Promise<{ enabled: boolean; message: string }> => {
+    const { data } = await apiClient.put('/admin/settings/chat-widget', { enabled })
+    return data
+  },
+}

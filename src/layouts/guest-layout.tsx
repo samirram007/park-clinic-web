@@ -1,8 +1,11 @@
 import { useLayoutEffect, useState } from 'react'
 import { Outlet } from '@tanstack/react-router'
+import { useQuery } from '@tanstack/react-query'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import ScrollToTop from '@/components/ScrollToTop'
+import ChatWidget from '@/features/contact/components/chat-widget'
+import { settingsService } from '@/features/admin/data/api'
 
 export default function GuestLayout() {
   const [headerHeight, setHeaderHeight] = useState(128)
@@ -26,6 +29,13 @@ export default function GuestLayout() {
     return () => observer.disconnect()
   }, [])
 
+  const { data: chatSettings } = useQuery({
+    queryKey: ['chat-widget-settings'],
+    queryFn: () => settingsService.getChatWidgetStatus(),
+    staleTime: 1000 * 60 * 5, // 5 minutes cache
+  })
+  const chatEnabled = chatSettings?.enabled ?? true
+
   return (
     <>
       <Header />
@@ -34,6 +44,7 @@ export default function GuestLayout() {
       </div>
       <Footer />
       <ScrollToTop />
+      {chatEnabled && <ChatWidget />}
     </>
   )
 }

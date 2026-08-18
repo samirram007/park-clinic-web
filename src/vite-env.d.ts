@@ -15,6 +15,7 @@ interface ImportMetaEnv {
   readonly VITE_SITE_URL: string
   readonly VITE_API_URL: string
   readonly VITE_AUTH_STORAGE_TYPE: string
+  readonly VITE_CONTACT_CHAT_ENABLED: string
 }
 
 interface ImportMeta {

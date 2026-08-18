@@ -32,6 +32,9 @@ export default function ProtectedHeader() {
         >
           Applications
         </Link>
+        <Link to="/admin/settings" className="text-sm hover:text-blue-600">
+          Settings
+        </Link>
       </nav>
       <div className="flex items-center gap-4">
         <span className="text-sm font-medium">{user?.name}</span>

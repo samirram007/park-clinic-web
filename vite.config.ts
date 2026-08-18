@@ -54,7 +54,7 @@ export default defineConfig(({ mode }) => {
       react(),
       tailwindcss(),
       sitemap({
-        hostname: env.VITE_SITE_URL || 'https://parkclinickolkata.com',
+        hostname: env.VITE_SITE_URL || 'https://parkclinickolkata.in',
         dynamicRoutes: [
           '/about',
           '/career',
